@@ -50,4 +50,9 @@ pipeline {
             }
         }
     }
+       post {
+            always {
+                // Archive the JaCoCo report and other artifacts for inspection
+                archiveArtifacts artifacts: '*/target/site/jacoco/*', allowEmptyArchive: true
+            }
 }
