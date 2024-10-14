@@ -7,5 +7,11 @@ pipeline{
                 checkout scm
         }
        }
+       stage('Maven Compile'){
+        steps{
+        echo 'compiling'
+        sh 'mvn clean compile'
+        }
+       }
     }
 }
