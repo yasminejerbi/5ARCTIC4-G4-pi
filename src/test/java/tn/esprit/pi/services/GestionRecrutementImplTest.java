@@ -8,7 +8,6 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import tn.esprit.pi.entities.Recrutement;
 import tn.esprit.pi.repository.IRecrutementRepository;
-import tn.esprit.pi.services.GestionRecrutementImpl;
 
 import java.util.Arrays;
 import java.util.List;
