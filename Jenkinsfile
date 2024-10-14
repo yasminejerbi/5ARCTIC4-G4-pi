@@ -19,7 +19,7 @@ pipeline{
             sh 'mvn test'
             }
         }
-       }
+
         stage('Code Coverage with Jacoco') {
             steps {
                 echo 'Running Jacoco for code coverage..'
