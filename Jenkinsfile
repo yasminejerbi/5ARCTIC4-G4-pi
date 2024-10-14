@@ -13,6 +13,12 @@ pipeline{
         sh 'mvn clean compile'
         }
        }
+        stage('Code Coverage with Jacoco') {
+            steps {
+                echo 'Running Jacoco for code coverage..'
+                sh 'mvn jacoco:report'
+            }
+        }
         stage('SonarQube Analysis') {
             environment {
                 scannerHome = tool 'SonarScanner'  // Name given during Jenkins configuration
