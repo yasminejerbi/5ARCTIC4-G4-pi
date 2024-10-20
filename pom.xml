@@ -85,16 +85,6 @@
             <enabled>false</enabled> <!-- Ensure SNAPSHOTS are disabled here -->
         </snapshots>
     </repository>
-    <snapshotRepository>
-        <id>deploymentSnapshotRepo</id>
-        <url>http://192.168.127.154:8081/repository/maven-snapshots/</url> <!-- This should point to the correct SNAPSHOT repository -->
-        <snapshots>
-            <enabled>true</enabled>
-        </snapshots>
-        <releases>
-            <enabled>false</enabled> <!-- Ensure RELEASES are disabled here -->
-        </releases>
-    </snapshotRepository>
 </distributionManagement>
 
 
