@@ -1,0 +1,60 @@
+apiVersion: 2019-12-01
+location: southafricanorth
+name: clubhub-cluster
+properties:
+  containers:
+    - name: clubhubcontainerfront
+      properties:
+        image: espritarctic.azurecr.io/pi-angular:v1.0
+        ports:
+          - port: 80
+        resources:
+          requests:
+            cpu: 2
+            memoryInGB: 4
+        volumeMounts:
+          - name: uploads
+            mountPath: /app/uploads
+    - name: clubhubcontainerback
+      properties:
+        image: espritarctic.azurecr.io/pi-back:v1.0
+        ports:
+          - port: 9000
+        resources:
+          requests:
+            cpu: 2
+            memoryInGB: 4
+        environmentVariables:
+          - name: MYSQL_HOST
+            value: club-server-db.mysql.database.azure.com
+          - name: MYSQL_PORT
+            value: '3306'
+          - name: MYSQL_DB_NAME
+            value: pi
+          - name: MYSQL_USER
+            value: admin_clubhub # Base64 encoded value of 'admin_clubhub'
+          - name: MYSQL_PASSWORD
+            value: Aze=#*154 # Base64 encoded value of 'Aze=#*154'
+  volumes:
+    - name: uploads
+      azureFile:
+        shareName: sharehub
+        storageAccountName: arcticstorage
+        storageAccountKey: FDbDnDTmc7ckCU+62kpdi6w40TUTuCsKFY3XPfO8NGIZoISikdtDYP+MPLc8DjntgKQJxzuM4r1O+AStpdZ9Mw==
+  ipAddress:
+    dnsNameLabel: clubhub
+    fqdn: clubhub.southafricanorth.azurecontainer.io
+    ip: public
+    ports:
+      - port: 9000
+      - port: 80
+        protocol: TCP
+    type: Public
+  osType: Linux
+  restartPolicy: Always
+  imageRegistryCredentials:
+    - server: "espritarctic.azurecr.io"
+      username: "espritarctic"
+      password: "3O1uESlHYKKuilIe4V/gdNTW38qbbAOzvRYs7Gtmtu+ACRDBjzmB"
+tags: null
+type: Microsoft.ContainerInstance/containerGroups
