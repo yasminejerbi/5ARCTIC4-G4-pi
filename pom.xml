@@ -25,7 +25,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
@@ -52,7 +51,6 @@
             <artifactId>mssql-jdbc</artifactId>
             <version>9.4.0.jre8</version> <!-- or the latest version available -->
         </dependency>
-
     </dependencies>
 
     <build>
@@ -74,19 +72,21 @@
             </plugin>
         </plugins>
     </build>
+
     <distributionManagement>
-    <repository>
-        <id>deploymentRepo</id>
-        <url>http://192.168.127.154:8081/repository/maven-releases/</url>
-        <releases>
-            <enabled>true</enabled>
-        </releases>
-        <snapshots>
-            <enabled>false</enabled> <!-- Ensure SNAPSHOTS are disabled here -->
-        </snapshots>
-    </repository>
-</distributionManagement>
-
-
-
+        <repository>
+            <id>deploymentRepo</id>
+            <url>http://192.168.127.154:8081/repository/maven-releases/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled> <!-- Snapshots disabled for release repo -->
+            </snapshots>
+        </repository>
+        <snapshotRepository>
+            <id>deploymentSnapshotRepo</id> <!-- Ensure this matches your settings.xml -->
+            <url>http://192.168.127.154:8081/repository/maven-snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
 </project>
