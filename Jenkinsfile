@@ -49,6 +49,13 @@ pipeline {
                 }
             }
         }
+        stage('Maven Deploy') {
+            steps {
+                echo 'Deploying the artifact to Nexus'
+                sh 'mvn deploy -DskipTests'
+            }
+        }
+
     }
        post {
             always {
