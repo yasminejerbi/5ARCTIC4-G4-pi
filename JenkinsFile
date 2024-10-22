@@ -1,0 +1,19 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                echo 'Cloning the code'
+                checkout scm
+            }
+        }
+
+        stage('Maven Compile') {
+            steps {
+                echo 'Compiling the code'
+                sh 'mvn clean compile'
+            }
+        }
+}
+}
