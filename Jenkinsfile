@@ -5,7 +5,7 @@ pipeline {
         stage('Clone Repository') {
             steps {
                 // Clone your GitHub repository
-                git branch: 'MayssaBenTaghaline-5Arctic4-G4', url: 'https://github.com/yasminejerbi/5ARCTIC4-G4-pi.git'
+                git branch: 'MayssaBenTaghaline-5Arctic4-G4', url: 'https://github.com/yasminejerbi/5ARCTIC4-G4-pi.git', credentialsId: 'github-jenkins'
             }
         }
 
