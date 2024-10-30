@@ -7,7 +7,7 @@ import { sponsors } from 'src/app/model/sponsors';
   providedIn: 'root'
 })
 export class SponsorsService {
-  private apiSponsorsaffiche='http://localhost:9000/pi/sponsors/getAll';
+  private apiSponsorsaffiche='http://localhost:9001/pi/sponsors/getAll';
 
   constructor(private http: HttpClient) { }
 listSponsors():Observable<sponsors[]> {

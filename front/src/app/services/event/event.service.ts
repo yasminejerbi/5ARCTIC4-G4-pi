@@ -10,18 +10,18 @@ import { User } from 'src/app/model/User';
   providedIn: 'root'
 })
 export class EventService {
-  private listurl ='http://localhost:9000/pi/event/getAll';
-  private apiSponsorsaffiche='http://localhost:9000/pi/sponsors/getAll';
-  private apiUseraffiche='http://localhost:9000/pi/utilisateur/getAll';
+  private listurl ='http://localhost:9001/pi/event/getAll';
+  private apiSponsorsaffiche='http://localhost:9001/pi/sponsors/getAll';
+  private apiUseraffiche='http://localhost:9001/pi/utilisateur/getAll';
 
-  private deleteEventUrl = "http://localhost:9000/pi/event/deleteID/";
-  private apiUrl = 'http://localhost:9000/pi/event';
-  /*private listurl ='http://clubhub.southafricanorth.azurecontainer.io:9000/pi/event/getAll';
-private apiSponsorsaffiche='http://clubhub.southafricanorth.azurecontainer.io:9000/pi/sponsors/getAll';
-private apiUseraffiche='http://clubhub.southafricanorth.azurecontainer.io:9000/pi/utilisateur/getAll';
+  private deleteEventUrl = "http://localhost:9001/pi/event/deleteID/";
+  private apiUrl = 'http://localhost:9001/pi/event';
+  /*private listurl ='http://clubhub.southafricanorth.azurecontainer.io:9001/pi/event/getAll';
+private apiSponsorsaffiche='http://clubhub.southafricanorth.azurecontainer.io:9001/pi/sponsors/getAll';
+private apiUseraffiche='http://clubhub.southafricanorth.azurecontainer.io:9001/pi/utilisateur/getAll';
 
-private deleteEventUrl = "http://clubhub.southafricanorth.azurecontainer.io:9000/pi/event/deleteID/";
-private apiUrl = 'http://clubhub.southafricanorth.azurecontainer.io:9000/pi/event';
+private deleteEventUrl = "http://clubhub.southafricanorth.azurecontainer.io:9001/pi/event/deleteID/";
+private apiUrl = 'http://clubhub.southafricanorth.azurecontainer.io:9001/pi/event';
 */
   constructor(private http: HttpClient) { }
   listevents():Observable<events[]>{
@@ -35,7 +35,7 @@ private apiUrl = 'http://clubhub.southafricanorth.azurecontainer.io:9000/pi/even
     
    }
    getUserById(id:number){
-    return this.http.get<User>('http://localhost:9000/pi/utilisateur/getUtilisateurId/'+id)
+    return this.http.get<User>('http://localhost:9001/pi/utilisateur/getUtilisateurId/'+id)
   }
    listSponsors():Observable<sponsors[]> {
     
@@ -43,7 +43,7 @@ private apiUrl = 'http://clubhub.southafricanorth.azurecontainer.io:9000/pi/even
    }
    
    getEvent(id: Number) {
-    return this.http.get('http://localhost:9000/pi/event/getEvenementId/'+ id)
+    return this.http.get('http://localhost:9001/pi/event/getEvenementId/'+ id)
   }
    deleteEvent(id : number) {
     return this.http.delete<events>(this.deleteEventUrl + id);
