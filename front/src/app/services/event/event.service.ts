@@ -4,7 +4,7 @@ import { Observable, catchError, throwError } from 'rxjs';
 import { events } from 'src/app/model/event'; 
 import { sponsors } from 'src/app/model/sponsors';
 import { User } from 'src/app/model/User';
-import { environment } from '../../../environments/environment';
+import { environment } from '../../../environments/environment.prod';
 
 @Injectable({
   providedIn: 'root'
