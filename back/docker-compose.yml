@@ -20,6 +20,7 @@ services:
       MYSQL_DB_NAME: pi
       MYSQL_USER: root
       MYSQL_PASSWORD: root
+      SERVER_PORT: 9001
     depends_on:
       - mysql
     networks:
