@@ -15,7 +15,7 @@ services:
     ports:
       - "9001:9000"
     environment:
-      MYSQL_HOST: mysql
+      MYSQL_HOST: mysqlcontainer
       MYSQL_PORT: 3306
       MYSQL_DB_NAME: pi
       MYSQL_USER: root
@@ -28,6 +28,7 @@ services:
 
   mysql:
     image: mysql:8.0.36
+    container_name: mysqlcontainer
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: pi
