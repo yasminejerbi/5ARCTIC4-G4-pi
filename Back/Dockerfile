@@ -1,14 +1,13 @@
-# Utilisez une image de base contenant Java pour exécuter votre application Spring Boot
-FROM openjdk:11-jre-slim
+FROM openjdk:17
 
-# Mettez à jour le répertoire de travail
+# Set the working directory inside the container
 WORKDIR /app
 
-# Copiez le jar de votre application Spring Boot dans le conteneur
-COPY target/Pi-0.0.1-SNAPSHOT.jar /app
+# Copy the JAR file from the host to the container
+COPY target/Pi-0.0.1-SNAPSHOT.jar ./Pi-0.0.1-SNAPSHOT.jar
 
-# Exposez le port sur lequel votre application Spring Boot s'exécute
+# Expose the port your Spring Boot app listens on (change if needed)
 EXPOSE 9000
 
-# Commande pour exécuter votre application Spring Boot lorsque le conteneur démarre
+# Run the JAR file when the container starts
 CMD ["java", "-jar", "Pi-0.0.1-SNAPSHOT.jar"]
