@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register Page</title>
+  <link rel="stylesheet" href="register.component.css">
+</head>
+<body>
+  <div class="register-container" style="margin-top: 100px;">
+    <form [formGroup]="RegisterForm" (ngSubmit)="persistUser()">
+      <h2>Register</h2>
+      <div class="form-group">
+        <label for="nomUtilisateur">Last Name <span>(Specify your last name)</span></label>
+        <input type="text" id="nomUtilisateur" name="nomUtilisateur" placeholder="Enter your last name" formControlName="nomUtilisateur" required>
+        <div *ngIf="RegisterForm.get('nomUtilisateur')?.invalid && RegisterForm.get('nomUtilisateur')?.touched">
+          <div *ngIf="RegisterForm.get('nomUtilisateur')?.hasError('required')">Last name is required</div>
+          <div *ngIf="RegisterForm.get('nomUtilisateur')?.hasError('minlength')">Last name should be at least 3 characters</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="prenomUtilisateur">First Name <span>(Specify your first name)</span></label>
+        <input type="text" id="prenomUtilisateur" name="prenomUtilisateur" placeholder="Enter your first name" formControlName="prenomUtilisateur" required>
+        <div *ngIf="RegisterForm.get('prenomUtilisateur')?.invalid && RegisterForm.get('prenomUtilisateur')?.touched">
+          <div *ngIf="RegisterForm.get('prenomUtilisateur')?.hasError('required')">First name is required</div>
+          <div *ngIf="RegisterForm.get('prenomUtilisateur')?.hasError('minlength')">First name should be at least 3 characters</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="email">Email Address <span>(Specify your email address)</span></label>
+        <input type="email" id="email" name="email" placeholder="Enter your email address" formControlName="email" required>
+        <div *ngIf="RegisterForm.get('email')?.invalid && RegisterForm.get('email')?.touched">
+          <div *ngIf="RegisterForm.get('email')?.hasError('required')">Email is required</div>
+          <div *ngIf="RegisterForm.get('email')?.hasError('email')">Email must respect the rules</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="motDePasse">Password <span>(Specify your password)</span></label>
+        <input type="password" id="motDePasse" name="motDePasse" placeholder="Enter your password" formControlName="motDePasse" required>
+        <div *ngIf="RegisterForm.get('motDePasse')?.invalid && RegisterForm.get('motDePasse')?.touched">
+          <div *ngIf="RegisterForm.get('motDePasse')?.hasError('required')">Password is required</div>
+          <div *ngIf="RegisterForm.get('motDePasse')?.hasError('minlength')">Password should be at least 8 characters</div>
+          <div *ngIf="RegisterForm.get('motDePasse')?.hasError('pattern')">
+            Password  must contain at least one uppercase letter, one lowercase letter, and one number</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="numTel">Phone Number <span>(Specify your phone number)</span></label>
+        <input type="text" id="numTel" name="numTel" placeholder="Enter your phone number" formControlName="numTel" required>
+        <div *ngIf="RegisterForm.get('numTel')?.invalid && RegisterForm.get('numTel')?.touched">
+          <div *ngIf="RegisterForm.get('numTel')?.hasError('required')">Telephone is required</div>
+          <div *ngIf="RegisterForm.get('numTel')?.hasError('pattern')">Telephone should be 8 numbers</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="role">Role <span>(Select your role)</span></label>
+        <select id="role" name="role" formControlName="role" required>
+          <option value="" disabled selected>Choose a role</option>
+          <option value="super_admin">Super Admin</option>
+          <option value="admin_club">Club Admin</option>
+          <option value="user">User</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="interet">Interest <span>(Select your interest)</span></label>
+        <select id="interet" name="interet" formControlName="interet"  required>
+          <option value="" disabled selected>Choose an interest</option>
+          <option value="sport">Sport</option>
+          <option value="music">Music</option>
+          <option value="tech">Technology</option>
+          <option value="photographie">Photography</option>
+          <option value="design">Design</option>
+          <option value="dessin">Drawing</option>
+          <option value="robots">Robots</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="photo">photo <span>(Specify your photo)</span></label>
+        <input type="file" id="photo" name="photo" placeholder="Enter your photo" formControlName="photo" (change)="image($event)" required>
+        <div *ngIf="RegisterForm.get('photo')?.invalid && RegisterForm.get('photo')?.touched">
+          <div *ngIf="RegisterForm.get('photo')?.hasError('required')">photo is required</div>
+        </div>
+      </div>
+      <button type="submit"  >Register</button>
+    </form>
+  </div>
+  
+</body>
+</html>
