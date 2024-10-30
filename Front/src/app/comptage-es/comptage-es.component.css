@@ -1,0 +1,31 @@
+/* camera-url.component.css */
+
+/* Style du conteneur */
+.container {
+    padding: 20px;
+  }
+  
+  /* Style de l'input */
+  #cameraUrl {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 2px solid hwb(10 16% 6%);
+    border-radius: 5px;
+  }
+  
+  /* Style du bouton */
+  button {
+    background-color: hwb(10 16% 6%);
+    color: #fff; /* Blanc */
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  /* Style du bouton au survol */
+  button:hover {
+    background-color: hwb(10 36% 16%);
+  }
+  
