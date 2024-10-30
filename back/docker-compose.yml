@@ -4,7 +4,7 @@ services:
   frontend:
     image: tum3d/pi-appfront-image
     ports:
-      - "8080:80"
+      - "8082:80"
     volumes:
       - uploads:/app/uploads
     networks:
@@ -13,7 +13,7 @@ services:
   backend:
     image: tum3d/pi-appback-image
     ports:
-      - "9000:9000"
+      - "9001:9000"
     environment:
       MYSQL_HOST: mysql
       MYSQL_PORT: 3306
