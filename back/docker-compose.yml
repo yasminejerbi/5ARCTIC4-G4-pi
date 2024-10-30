@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  frontend:
+    image:
+    ports:
+      - "8080:80"
+    volumes:
+      - uploads:/app/uploads
+    networks:
+      - spring-net
+
+  backend:
+    image:
+    ports:
+      - "9000:9000"
+    environment:
+      MYSQL_HOST: mysqlcontainer
+      MYSQL_PORT: 3306
+      MYSQL_DB_NAME: pi
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+    depends_on:
+      - mysql
+    networks:
+      - spring-net
+
+  mysql:
+    image: mysql:8.0.36
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: pi
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - spring-net
+
+volumes:
+  uploads:
+  mysql_data:
+
+networks:
+  spring-net:

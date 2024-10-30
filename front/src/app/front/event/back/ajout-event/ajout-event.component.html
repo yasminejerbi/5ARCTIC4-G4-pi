@@ -1,0 +1,96 @@
+
+<body>
+  <div class="register-container" style="margin-top: 100px;" >
+    <form [formGroup]="RegisterForm" (ngSubmit)="submit()">
+      <h2>Add Event</h2>
+      <div class="form-group">
+        <div class="form-floating mb-3">
+          <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com" formControlName="nom" required="">
+          <label for="nom">Event name</label>
+        </div>
+        <div *ngIf="RegisterForm.get('nom')?.invalid && RegisterForm.get('nom')?.touched">
+          <div *ngIf="RegisterForm.get('nom')?.hasError('required')">Event name is required</div>
+          
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="form-floating mb-3">
+          <input type="text" class="form-control" id="floatingInput" placeholder="" formControlName="lieuEvenement" required="">
+          <label for="lieuEvenement">Event address</label>
+        
+        <div *ngIf="RegisterForm.get('lieuEvenement')?.invalid && RegisterForm.get('lieuEvenement')?.touched">
+          <div *ngIf="RegisterForm.get('lieuEvenement')?.hasError('required')">Event address is required</div>
+        </div>  
+      </div>
+      </div>
+      <div class="form-group">
+        <div class="form-floating">
+          <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px" formControlName="actionEvenement" required=""></textarea>
+          <label for="actionEvenement">Event action</label>
+        </div>
+        <div *ngIf="RegisterForm.get('actionEvenement')?.invalid && RegisterForm.get('actionEvenement')?.touched">
+          <div *ngIf="RegisterForm.get('actionEvenement')?.hasError('required')">this field is required</div>
+          
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="dateDebut">Start Date <span>(Specify your Start date)</span></label>
+        <input type="date" id="dateDebut" name="dateDebut" placeholder="Enter your Start date" formControlName="dateDebut" required [min]="todayDate" (change)="dateValidation()" [max]="MaxdebutDate">
+        <div *ngIf="RegisterForm.get('dateDebut')?.invalid && RegisterForm.get('dateDebut')?.touched">
+          <div *ngIf="RegisterForm.get('dateDebut')?.hasError('required')">Start date is required</div>
+          
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="dateFin">End date <span>(Specify your End date)</span></label>
+        <input type="date" id="dateFin" name="dateFin" placeholder="Enter your End date" formControlName="dateFin" required (change)="dateValidation()" [min]="minFinDate || todayDate">
+        <div *ngIf="RegisterForm.get('dateFin')?.invalid && RegisterForm.get('dateFin')?.touched">
+          <div *ngIf="RegisterForm.get('dateFin')?.hasError('required')">end Date is required</div>
+          
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="form-floating mb-3">
+          <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com" formControlName="numPlaces" required>
+          <label for="floatingInput">Number of Seats</label>
+        </div>
+        <div *ngIf="RegisterForm.get('numPlaces')?.invalid && RegisterForm.get('numPlaces')?.touched">
+          <div *ngIf="RegisterForm.get('numPlaces')?.hasError('required')">Number of seats is required</div>
+          <div *ngIf="RegisterForm.get('numPlaces')?.hasError('pattern')">Number of seats should be only number</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="mb-3">
+          <label for="formFile" class="form-label">Select Photo</label>
+          <input class="form-control" type="file" id="formFile" formControlName="photo" (change)="OnSelectedFile($event)">
+          <img [src]="imgSrc" class="img-thumbnail" >
+        </div>
+        <div *ngIf="RegisterForm.get('photo')?.invalid && RegisterForm.get('photo')?.touched">
+          <div *ngIf="RegisterForm.get('photo')?.hasError('required')">Photo is required</div>
+          
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="eventType">event Type <span>(Select your event Type)</span></label>
+        <select id="eventType" name="eventType"  formControlName="eventType"  class="form-select" aria-label="Default select example">
+          <option value="" disabled selected>Choose an event Type</option>
+          <option value="prive">private</option>
+          <option value="publique">public</option>
+          <option value="gratuit">free</option>
+          <option value="payant">Tickets</option>
+          
+        </select>
+      </div>
+      <!--<div class="form-group" >
+        <label for="sponsors">Club <span>(Select your Sponsors)</span></label>
+        <select id="eventType" name="eventType"  formControlName="clubs"  class="form-select" aria-label="Default select example">
+          <option *ngFor="let cb of ClubGRP" [value]="cb.id">{{cb.nomClub}}</option>
+        </select>
+      </div>-->
+      <button type="submit" class="btn btn-outline-danger">Add Event</button>
+    
+  
+</form>
+  </div>
+</body>
+<app-loading></app-loading>

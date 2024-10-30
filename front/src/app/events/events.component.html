@@ -1,0 +1,124 @@
+<div class="bradcam_area">
+    <div class="single_bradcam  d-flex align-items-center  overlay" >
+          <div class="container" >
+                <div class="row align-items-center justify-content-center">
+                   <div class="col-xl-12">
+                      <div class="bradcam_text text-center">
+                        <div class="shape_1 wow fadeInUp" data-wow-duration="1s" data-wow-delay=".2s">
+                            <img src="./assets/img/shape/shape_1.svg" alt="">
+                        </div>
+                        <div class="shape_2 wow fadeInDown" data-wow-duration="1s" data-wow-delay=".3s">
+                            <img src="./assets/img/shape/shape_2.svg" alt="">
+                        </div>
+                            <h3 class="wow fadeInRight" data-wow-duration="1s" data-wow-delay=".3s">Events</h3>
+                      </div>
+                   </div>
+                </div>
+          </div>
+       </div>
+ </div>
+ <div class="row justify-content-center">
+    <div class="row justify-content-center mt-5 mb-3">
+        <div class="col-lg-12 text-center">
+          <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="page = $event" class="pagination-controls">
+            <ng-template #prev>
+              <button class="pagination-btn">Previous</button>
+            </ng-template>
+            <ng-template #next>
+              <button class="pagination-btn">Next</button>
+            </ng-template>
+          </pagination-controls>
+        </div>
+      </div>
+ <section class="blog_area section-padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mb-5 mb-lg-0" >
+                <div class="blog_left_sidebar" >
+                    <div *ngFor="let event of searchEvents | paginate: { itemsPerPage: pageSize, currentPage: page, totalItems: searchEvents.length}">
+                    <article class="blog_item" >
+                        <div class="blog_item_img">
+                            <img class="card-img rounded-0" [src]="'/assets/img/'+event.photo" alt="Event Photo" [routerLink]="['/event',event.id]">
+                            <a class="blog_item_date" [routerLink]="['/event',event.id]">
+                                <h3>{{event.dateDebut}}</h3>
+                                
+                            </a>
+                        </div>
+
+                        <div class="blog_details">
+                            <a class="d-inline-block" [routerLink]="['/event',event.id]">
+                                <h2>{{event.nomEvenement}}</h2>
+                            </a>
+                            <p>{{event.actionEvenement | slice:0:50}}...</p>
+                            <ul class="blog-info-link">
+                                <li><a ><i class="fa fa-hourglass-end"></i> {{event.dateFin}}</a></li>
+                                <li><a ><i class="fa fa-users"></i> {{event.numPlaces}}</a></li>
+                                <li><a ><i class="fa fa-address-card"></i> {{event.eventType}}</a></li>
+                                <li><a class="d-inline-block" [routerLink]="['/eventMod',event.id]">Edit Event</a></li>
+                                <li><button class="btn btn-outline-danger" (click) ="Supp(event.id)">Delete Event</button></li>
+                            </ul>
+                        </div>
+                    </article>
+                    
+                </div>
+                    
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="blog_right_sidebar">
+                    <aside class="single_sidebar_widget search_widget">
+                        
+                            <div class="form-group">
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control " [(ngModel)]="searchInput" placeholder='Search for Events'
+                                        onfocus="this.placeholder = ''"
+                                        onblur="this.placeholder = 'Search for Events'" (ngModelChange)="SearchedEvents()">
+                                </div>
+                            </div>
+                        
+                    </aside>
+                    <aside class="single_sidebar_widget post_category_widget">
+                        <h4 class="widget_title">Category</h4>
+                        <ul class="list cat-list">
+                            <li *ngFor="let eventType of getEventTypes()">
+                                <a href="javascript:void(0);" class="d-flex">
+                                    <p>{{ eventType }}</p>
+                                    <p>({{ eventTypeCounts[eventType] || 0 }})</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </aside>
+
+
+                        <a routerLink="/eventAdd" class="boxed-btn3  wow fadeInLeft" data-wow-duration="1s" data-wow-delay=".7s">add Event</a>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="brand_area black_bg" >
+    <div class="container" >
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section_title text-center mb-80">
+                    <h4 class="wow fadeInRight" data-wow-duration="1s" data-wow-delay=".3s">Thanks to our Sponsors</h4>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-lg-12 text-center">
+              <div class="brand_wrap d-flex justify-content-center">
+                <div class="brand_active owl-carousel" style="position: relative; width: 100%; display: flex; justify-content: space-between;">
+                  <div class="single_brand" style="margin: 0 10px; flex: 0 0 auto;" *ngFor="let sp of sponsorsGRP">
+                    <img [src]="'/assets/img/'+sp.logo" alt="Sponsors Photo">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        
+    </div>
+</div>
+<app-loading></app-loading>

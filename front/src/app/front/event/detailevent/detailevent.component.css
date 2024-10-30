@@ -1,0 +1,21 @@
+.bradcam_area {
+    background-image: url(../detailevent/event.png);
+    position: relative;
+    z-index: 0;
+  }
+  h1 {
+    font-size: 50px; /* Adjust font size as needed */
+    color: #ffffff; /* Text color */
+    margin-bottom: 10px; /* Add some space between h1 and the following content */
+    font-style: oblique;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.badge {
+    padding: 5px 10px; /* Padding inside the badge */
+    font-size: 14px; /* Font size */
+    background-color: #f0f0f0; /* Background color */
+    color: #666; /* Text color */
+    border-radius: 5px; /* Rounded corners */
+    margin-left: 10px; /* Add space between h1 text and badge */
+}
