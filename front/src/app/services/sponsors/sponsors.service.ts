@@ -2,13 +2,14 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { sponsors } from 'src/app/model/sponsors';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SponsorsService {
-  private apiSponsorsaffiche='http://localhost:9001/pi/sponsors/getAll';
-
+  private apiUrl = environment.apiUrl;
+  private apiSponsorsaffiche = `${this.apiUrl}/sponsors/getAll`;
   constructor(private http: HttpClient) { }
 listSponsors():Observable<sponsors[]> {
     

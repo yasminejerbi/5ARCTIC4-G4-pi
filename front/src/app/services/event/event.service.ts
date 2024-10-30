@@ -1,54 +1,48 @@
 import { Injectable } from '@angular/core';
-import {HttpClient,HttpHeaders, HttpErrorResponse} from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { Observable, catchError, throwError } from 'rxjs';
 import { events } from 'src/app/model/event'; 
 import { sponsors } from 'src/app/model/sponsors';
-
-import { Observable, catchError, throwError } from 'rxjs';
 import { User } from 'src/app/model/User';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EventService {
-  private listurl ='http://localhost:9001/pi/event/getAll';
-  private apiSponsorsaffiche='http://localhost:9001/pi/sponsors/getAll';
-  private apiUseraffiche='http://localhost:9001/pi/utilisateur/getAll';
+  private apiUrl = environment.apiUrl; // Base API URL from environment
+  private listurl = `${this.apiUrl}/event/getAll`;
+  private apiSponsorsaffiche = `${this.apiUrl}/sponsors/getAll`;
+  private apiUseraffiche = `${this.apiUrl}/utilisateur/getAll`;
+  private deleteEventUrl = `${this.apiUrl}/event/deleteID/`;
 
-  private deleteEventUrl = "http://localhost:9001/pi/event/deleteID/";
-  private apiUrl = 'http://localhost:9001/pi/event';
-  /*private listurl ='http://clubhub.southafricanorth.azurecontainer.io:9001/pi/event/getAll';
-private apiSponsorsaffiche='http://clubhub.southafricanorth.azurecontainer.io:9001/pi/sponsors/getAll';
-private apiUseraffiche='http://clubhub.southafricanorth.azurecontainer.io:9001/pi/utilisateur/getAll';
-
-private deleteEventUrl = "http://clubhub.southafricanorth.azurecontainer.io:9001/pi/event/deleteID/";
-private apiUrl = 'http://clubhub.southafricanorth.azurecontainer.io:9001/pi/event';
-*/
   constructor(private http: HttpClient) { }
-  listevents():Observable<events[]>{
-    
+
+  listevents(): Observable<events[]> {
     return this.http.get<events[]>(this.listurl);
-    
-   }
-   listUsers():Observable<User[]>{
-    
+  }
+
+  listUsers(): Observable<User[]> {
     return this.http.get<User[]>(this.apiUseraffiche);
-    
-   }
-   getUserById(id:number){
-    return this.http.get<User>('http://localhost:9001/pi/utilisateur/getUtilisateurId/'+id)
   }
-   listSponsors():Observable<sponsors[]> {
-    
+
+  getUserById(id: number): Observable<User> {
+    return this.http.get<User>(`${this.apiUrl}/utilisateur/getUtilisateurId/${id}`);
+  }
+
+  listSponsors(): Observable<sponsors[]> {
     return this.http.get<sponsors[]>(this.apiSponsorsaffiche);
-   }
-   
-   getEvent(id: Number) {
-    return this.http.get('http://localhost:9001/pi/event/getEvenementId/'+ id)
   }
-   deleteEvent(id : number) {
+
+  getEvent(id: number): Observable<events> {
+    return this.http.get<events>(`${this.apiUrl}/event/getEvenementId/${id}`);
+  }
+
+  deleteEvent(id: number): Observable<events> {
     return this.http.delete<events>(this.deleteEventUrl + id);
-   }
-   createEvent(event: events, image: File | null): Observable<any> {
+  }
+
+  createEvent(event: events, image: File | null): Observable<any> {
     const formData = new FormData();
     formData.append('nomEvenement', event.nomEvenement);
     formData.append('lieuEvenement', event.lieuEvenement);
@@ -56,20 +50,15 @@ private apiUrl = 'http://clubhub.southafricanorth.azurecontainer.io:9001/pi/even
     formData.append('dateDebut', event.dateDebut.toString());
     formData.append('dateFin', event.dateFin.toString());
     formData.append('numPlaces', event.numPlaces.toString());
-    formData.append('eventType', event.eventType.toString()); // Assuming eventType is of type Event_type
+    formData.append('eventType', event.eventType.toString());
 
-    //formData.append('image', image, image.name);
     if (image) {
       formData.append('photo', image, image.name);
-  }
-    const options = {
-        headers: new HttpHeaders()
-            // Uncomment below line if needed
-            // .set('Content-Type', 'multipart/form-data')
-    };
+    }
 
-    return this.http.post<any>(`${this.apiUrl}/addEvent`, formData, options);
+    return this.http.post<any>(`${this.apiUrl}/event/addEvent`, formData);
   }
+
   updateEvent(eventId: number, event: events, image: File | null): Observable<any> {
     const formData = new FormData();
     formData.append('nomEvenement', event.nomEvenement);
@@ -78,20 +67,15 @@ private apiUrl = 'http://clubhub.southafricanorth.azurecontainer.io:9001/pi/even
     formData.append('dateDebut', event.dateDebut.toString());
     formData.append('dateFin', event.dateFin.toString());
     formData.append('numPlaces', event.numPlaces.toString());
-    formData.append('eventType', event.eventType.toString()); // Assuming eventType is of type Event_type
+    formData.append('eventType', event.eventType.toString());
 
     if (image) {
       formData.append('photo', image, image.name);
     }
 
-    const options = {
-      headers: new HttpHeaders()
-        // Uncomment below line if needed
-        // .set('Content-Type', 'multipart/form-data')
-    };
-
-    return this.http.put<any>(`${this.apiUrl}/updateEvent/${eventId}`, formData, options);
+    return this.http.put<any>(`${this.apiUrl}/event/updateEvent/${eventId}`, formData);
   }
+
   assignUserToEvent(eventId: number, userId: number): Observable<any> {
     const params = { eventId: eventId.toString(), userId: userId.toString() };
     const options = {
@@ -100,7 +84,7 @@ private apiUrl = 'http://clubhub.southafricanorth.azurecontainer.io:9001/pi/even
       })
     };
 
-    return this.http.post<any>(`${this.apiUrl}/assignUserToEvent`, null, { params, headers: options.headers })
+    return this.http.post<any>(`${this.apiUrl}/event/assignUserToEvent`, null, { params, headers: options.headers })
       .pipe(
         catchError(error => {
           console.error('Error:', error);
@@ -108,5 +92,4 @@ private apiUrl = 'http://clubhub.southafricanorth.azurecontainer.io:9001/pi/even
         })
       );
   }
-   
 }
