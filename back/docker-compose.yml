@@ -21,6 +21,8 @@ services:
       MYSQL_USER: root
       MYSQL_PASSWORD: root
       SERVER_PORT: 9000
+    volumes:
+      - uploads:/app/uploads
     depends_on:
       - mysql
     networks:
