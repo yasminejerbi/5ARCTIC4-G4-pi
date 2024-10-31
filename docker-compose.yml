@@ -21,12 +21,12 @@ services:
       MYSQL_USER: root
       MYSQL_PASSWORD: root
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/pi
-      SERVER_PORT: 9000
+      SERVER_PORT: 9003
       SERVER_SERVLET_CONTEXT_PATH: /pi
     depends_on:
       - mysql
     ports:
-      - "9000:9000"
+      - "9003:9003"
     networks:
       - app-network
 
