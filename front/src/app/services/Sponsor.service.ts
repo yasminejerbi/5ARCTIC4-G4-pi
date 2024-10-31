@@ -12,11 +12,11 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class SponsorService {
-  private ajouterurl ='http://localhost:9000/pi/sponsors/ajout';
-  private listurl ='http://localhost:9000/pi/sponsors/getAll';
-  private Url='http://localhost:9000/pi/sponsors/deleteID';
-  private Urls='http://localhost:9000/pi/sponsors';
-  private modifierurl = 'http://localhost:9000/pi/sponsors/update';
+  private ajouterurl ='http://192.168.33.10:9001/pi/sponsors/ajout';
+  private listurl ='http://192.168.33.10:9001/pi/sponsors/getAll';
+  private Url='http://192.168.33.10:9001/pi/sponsors/deleteID';
+  private Urls='http://192.168.33.10:9001/pi/sponsors';
+  private modifierurl = 'http://192.168.33.10:9001/pi/sponsors/update';
 /*  
 
   private userUrl='http://localhost:8085/rania/retrieveAllUsers';
@@ -48,10 +48,10 @@ export class SponsorService {
 
    }
    getSponsor(id: any) {
-    return this.http.get('http://localhost:9000/pi/sponsors/getSponsorsId/' + id)
+    return this.http.get('http://192.168.33.10:9001/pi/sponsors/getSponsorsId/' + id)
   }
   /*  supprimerSponsor(id: number): Observable<void> {
-    return this.http.delete<void>(http://localhost:9000/pi/feedback/deleteID/${id});
+    return this.http.delete<void>(http://192.168.33.10:9001/pi/feedback/deleteID/${id});
    } */
 
 /*   ajoutReponseToSponsor(id: number, reponseSponsor: ReponseSponsor): Observable<ReponseSponsor> {
