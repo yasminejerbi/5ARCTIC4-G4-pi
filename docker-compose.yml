@@ -3,7 +3,7 @@ services:
   back:
     image: med555/back:latest
     ports:
-      - "9000:9000"
+      - "9003:9003"
     environment:
       MYSQL_HOST: mysql
       MYSQL_PORT: 3306

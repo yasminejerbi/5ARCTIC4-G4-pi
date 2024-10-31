@@ -26,7 +26,6 @@ export class RegisterComponent implements OnInit {
     numTel: new FormControl('', [Validators.required, Validators.pattern('[0-9]{8}')]),
     role: new FormControl('', [Validators.required]),
     interet: new FormControl('', [Validators.required]),
-    photo:new FormControl(null, [Validators.required]),
   });
 
   persistUser() {
@@ -40,7 +39,7 @@ export class RegisterComponent implements OnInit {
         motDePasse: formData.motDePasse,
         role:formData.role,
         interet:formData.interet,
-        image: this.photoUser.name, 
+   
       };
       
       // if (this.photoUser) {

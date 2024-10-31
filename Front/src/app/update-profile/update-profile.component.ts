@@ -23,7 +23,7 @@ export class UpdateProfileComponent {
       numTel: new FormControl('', [Validators.required, Validators.pattern('[0-9]{8}')]),
       role: new FormControl('', [Validators.required]),
       interet: new FormControl('', [Validators.required]),
-      photo:new FormControl(null, [Validators.required]),
+     
     });
   
     save() {
@@ -38,7 +38,7 @@ export class UpdateProfileComponent {
           motDePasse: formData.motDePasse,
           role:formData.role,
           interet:formData.interet,
-          image: this.photoUser.name,
+       
         };
   
         this.service.updateUser(UserData, this.photoUser).subscribe(

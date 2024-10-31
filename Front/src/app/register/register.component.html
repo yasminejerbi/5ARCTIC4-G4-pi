@@ -74,13 +74,7 @@
           <option value="robots">Robots</option>
         </select>
       </div>
-      <div class="form-group">
-        <label for="photo">photo <span>(Specify your photo)</span></label>
-        <input type="file" id="photo" name="photo" placeholder="Enter your photo" formControlName="photo" (change)="image($event)" required>
-        <div *ngIf="RegisterForm.get('photo')?.invalid && RegisterForm.get('photo')?.touched">
-          <div *ngIf="RegisterForm.get('photo')?.hasError('required')">photo is required</div>
-        </div>
-      </div>
+
       <button type="submit"  >Register</button>
     </form>
   </div>
