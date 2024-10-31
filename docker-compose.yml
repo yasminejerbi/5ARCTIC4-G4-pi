@@ -1,4 +1,4 @@
-version: '3'
+version: '3.8'  # Specify version
 services:
   back:
     image: med555/back:latest
@@ -12,6 +12,9 @@ services:
       MYSQL_PASSWORD: root
     networks:
       - app-network
+    depends_on:
+      mysql:
+        condition: service_healthy  # Wait until MySQL is healthy
 
   front:
     image: med555/front:latest
@@ -29,6 +32,11 @@ services:
       - "3306:3306"
     networks:
       - app-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
 networks:
   app-network:
