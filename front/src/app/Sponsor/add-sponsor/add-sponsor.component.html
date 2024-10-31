@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register Page</title>
+  <link rel="stylesheet" href="add-sponsor.component.css">
+</head>
+<body>
+
+  <div class="register-container" style="margin-top: 100px;">
+    <form [formGroup]="sponsorForm" (ngSubmit)="persistUser()">
+      <h2>Register</h2>
+      <div class="form-group">
+        <label for="nomSponsor">Sponsor Name <span>( Specify the sponsor name ) </span></label>
+        <input type="text" id="nomSponsor" name="nomSponsor" placeholder="Enter your last name" formControlName="nomSponsor" required>
+        <div *ngIf="sponsorForm.get('nomSponsor')?.invalid && sponsorForm.get('nomSponsor')?.touched">
+          <div *ngIf="sponsorForm.get('nomSponsor')?.hasError('required')">Sponsor name is required</div>
+          <div *ngIf="sponsorForm.get('nomSponsor')?.hasError('minlength')">Sponsor name should be at least 3 characters</div>
+        </div>
+      </div>
+
+
+      <div class="form-group">
+        <label for="typeSponsoring">Sponsor Type <span>(Select sponsor type)</span></label>
+        <select id="typeSponsoring" name="typeSponsoring" formControlName="typeSponsoring" required>
+          <option value="" disabled selected>Choose type</option>
+          <option value="financier">financier</option>
+          <option value="materiel">materiel</option>
+        </select>
+      </div>
+
+
+      <div class="form-group">
+        <label for="dureeSponsoring">Sponsorship duration <span>(Specify the sponsorship duration per day)</span></label>
+        <input type="number" id="dureeSponsoring" name="dureeSponsoring" placeholder="Enter sponsorship duration" formControlName="dureeSponsoring" required>
+        <div *ngIf="sponsorForm.get('dureeSponsoring')?.invalid && sponsorForm.get('dureeSponsoring')?.touched">
+          <div *ngIf="sponsorForm.get('dureeSponsoring')?.hasError('required')">Sponsor duration is required</div>
+          <div *ngIf="sponsorForm.get('dureeSponsoring')?.hasError('pattern')">should be a number</div>
+          <div *ngIf="sponsorForm.get('dureeSponsoring')?.hasError('min')">Amount should be at least 30 days</div>
+        </div>
+      </div>
+
+      <div class="form-group" *ngIf="sponsorForm.get('typeSponsoring')?.value === 'financier'">
+        <label for="montant">Amount <span>(Specify the amount per Dt)</span></label>
+        <input type="number" id="montant" name="montant" placeholder="Enter the amount" formControlName="montant">
+        <div *ngIf="sponsorForm.get('montant')?.invalid && sponsorForm.get('montant')?.touched">
+          <div *ngIf="sponsorForm.get('montant')?.hasError('required')">Amount is required</div>
+          <div *ngIf="sponsorForm.get('montant')?.hasError('pattern')">should be a number</div>
+          <div *ngIf="sponsorForm.get('montant')?.hasError('min')">Amount should be more than 100 Dt</div>
+        </div>
+      </div>
+
+
+
+
+      
+      <div class="form-group" *ngIf="sponsorForm.get('typeSponsoring')?.value === 'materiel'">
+        <label for="typemateriel">Materiel Type <span>(Select materiel type)</span></label>
+        <select id="typemateriel" name="typemateriel" formControlName="typemateriel">
+          <option value="" disabled selected>Choose type</option>
+          <option value="Laptop">Laptop</option>
+          <option value="materiel">Data Show</option>
+          <option value="Tables_chairs">Tables & chairs</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email Address <span>(Specify your email address)</span></label>
+        <input type="email" id="email" name="email" placeholder="Enter your email address" formControlName="email" required>
+        <div *ngIf="sponsorForm.get('email')?.invalid && sponsorForm.get('email')?.touched">
+          <div *ngIf="sponsorForm.get('email')?.hasError('required')">Email is required</div>
+          <div *ngIf="sponsorForm.get('email')?.hasError('email')">Email must respect the rules</div>
+        </div>
+      </div>
+
+
+      <div class="form-group">
+        <label for="numTel">Phone Number <span>(Specify your phone number)</span></label>
+        <input type="tel" id="numTel" name="numTel" placeholder="Enter your phone number" formControlName="numTel" required>
+        <div *ngIf="sponsorForm.get('numTel')?.invalid && sponsorForm.get('numTel')?.touched">
+          <div *ngIf="sponsorForm.get('numTel')?.hasError('required')">Telephone is required</div>
+          <div *ngIf="sponsorForm.get('numTel')?.hasError('pattern')">Telephone should be 8 numbers</div>
+        </div>
+      </div>
+      <button type="submit">Register</button>
+    </form>
+  </div>
+  
+</body>
+</html>

@@ -1,0 +1,74 @@
+<div class="container mt-4">
+    <form [formGroup]="sponsorForm" (ngSubmit)="modifierSponsor()">
+      <div class="form-group">
+        <label for="nomSponsor">Nom du sponsor</label>
+        <input type="text" class="form-control" id="nomSponsor" formControlName="nomSponsor">
+        <div *ngIf="validateField('nomSponsor')" class="text-danger">
+          {{ getErrorMessage('nomSponsor') }}
+        </div>
+      </div>
+
+
+      <div class="form-group">
+        <label for="typeSponsoring">Type de sponsoring</label>
+        <select class="form-control" id="typeSponsoring" formControlName="typeSponsoring">
+            <option value="materiel">materiel</option>
+            <option value="financier">financier</option>
+        </select>
+        <div *ngIf="validateField('typeSponsoring')" class="text-danger">
+          {{ getErrorMessage('typeSponsoring') }}
+        </div>
+      </div>
+
+
+
+      <div class="form-group">
+        <label for="dureeSponsoring">Durée de sponsoring</label>
+        <input type="number" class="form-control" id="dureeSponsoring" formControlName="dureeSponsoring">
+        <div *ngIf="validateField('dureeSponsoring')" class="text-danger">
+          {{ getErrorMessage('dureeSponsoring') }}
+        </div>
+      </div>
+
+
+
+      <div class="form-group">
+        <label for="montant">Montant</label>
+        <input type="number" class="form-control" id="montant" formControlName="montant">
+        <div *ngIf="validateField('montant')" class="text-danger">
+          {{ getErrorMessage('montant') }}
+        </div>
+      </div>
+
+
+
+      <div class="form-group">
+        <label for="typemateriel">Type du materiel</label>
+        <select class="form-control" id="typemateriel" formControlName="typemateriel">
+            <option value="Laptop">Laptop</option>
+            <option value="Data_show">Data_show</option>
+            <option value="Tables_chairs">Tables_chairs</option>
+        </select>
+        <div *ngIf="validateField('typemateriel')" class="text-danger">
+          {{ getErrorMessage('typemateriel') }}
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" class="form-control" id="email" formControlName="email">
+        <div *ngIf="validateField('email')" class="text-danger">
+          {{ getErrorMessage('email') }}
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="numTel">Numéro de téléphone</label>
+        <input type="text" class="form-control" id="numTel" formControlName="numTel">
+        <div *ngIf="validateField('numTel')" class="text-danger">
+          {{ getErrorMessage('numTel') }}
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary">Modifier</button>
+    </form>
+  </div>
+  

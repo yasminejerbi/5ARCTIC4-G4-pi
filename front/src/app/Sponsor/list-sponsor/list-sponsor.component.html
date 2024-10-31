@@ -1,0 +1,36 @@
+<div class="container">
+   
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Type de Sponsoring</th>
+          <th>Nom du Sponsor</th>
+          <th>Durée du Sponsoring</th>
+          <th>Montant</th>
+          <th>Type du Materiel</th>
+          <th>Email</th>
+          <th>Numero de Telephone</th>
+          <th>Actions</th>
+        
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let sponsor of sponsors" class="table-default">
+          <td>{{ sponsor.typeSponsoring }}</td>
+          <td>{{ sponsor.nomSponsor }}</td>
+          <td>{{ sponsor.dureeSponsoring }}</td>
+          <td>{{ sponsor.montant }}</td>
+          <td>{{ sponsor.typemateriel }}</td>
+          <td>{{ sponsor.email }}</td>
+          <td>{{ sponsor.numTel }}</td>
+          
+          <td>
+            <button class="btn btn-danger" (click)="sponsor.id && deleteSponsor(sponsor.id)">Supprimer</button>
+            <button class="btn btn-primary" (click)="sponsor.id && modifierSponsor(sponsor.id)">Modifier</button>
+            
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
