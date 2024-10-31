@@ -4,12 +4,14 @@ import { EventService } from 'src/app/services/event/event.service';
 import Swal from 'sweetalert2'
 import { TYPE } from 'src/app/model/event';
 import { User } from 'src/app/model/User';
+import { environment } from 'src/environments/environment.prod';
 @Component({
   selector: 'app-detailevent',
   templateUrl: './detailevent.component.html',
   styleUrls: ['./detailevent.component.css']
 })
 export class DetaileventComponent {
+  apiUrl = environment.apiUrl;
   id!: number;
   eventSearched!: any;
   user:any;

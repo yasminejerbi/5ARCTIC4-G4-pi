@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { sponsors } from '../model/sponsors';
 
 import Swal from 'sweetalert2'
+import { environment } from 'src/environments/environment.prod';
 
 @Component({
   selector: 'app-events',
@@ -13,6 +14,7 @@ import Swal from 'sweetalert2'
   
 })
 export class EventsComponent{ 
+    apiUrl = environment.apiUrl;
     pageSize = 5;
     page = 1  
     searchEvents : any[] = [];

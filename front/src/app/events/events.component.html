@@ -38,7 +38,7 @@
                     <div *ngFor="let event of searchEvents | paginate: { itemsPerPage: pageSize, currentPage: page, totalItems: searchEvents.length}">
                     <article class="blog_item" >
                         <div class="blog_item_img">
-                            <img class="card-img rounded-0" [src]="'/app/uploads/'+event.photo" alt="Event Photo" [routerLink]="['/event',event.id]">
+                            <img class="card-img rounded-0" [src]="this.apiUrl+'/app/uploads/' +event.photo" alt="Event Photo" [routerLink]="['/event',event.id]">
                             <a class="blog_item_date" [routerLink]="['/event',event.id]">
                                 <h3>{{event.dateDebut}}</h3>
                                 
