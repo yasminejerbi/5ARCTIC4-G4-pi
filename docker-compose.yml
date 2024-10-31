@@ -1,28 +1,6 @@
-version: '3.8'  # Specify version
+version: '3.8'
+
 services:
-  back:
-    image: med555/back:latest
-    ports:
-      - "9003:9003"
-    environment:
-      MYSQL_HOST: mysql
-      MYSQL_PORT: 3306
-      MYSQL_DB_NAME: pi
-      MYSQL_USER: root
-      MYSQL_PASSWORD: root
-    networks:
-      - app-network
-    depends_on:
-      mysql:
-        condition: service_healthy  # Wait until MySQL is healthy
-
-  front:
-    image: med555/front:latest
-    ports:
-      - "4200:80"
-    networks:
-      - app-network
-
   mysql:
     image: mysql:5.7
     environment:
@@ -30,14 +8,21 @@ services:
       MYSQL_DATABASE: pi
     ports:
       - "3306:3306"
-    networks:
-      - app-network
-    healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
 
-networks:
-  app-network:
-    driver: bridge
+  back:
+    image: med555/back:latest
+    environment:
+      MYSQL_HOST: mysql
+      MYSQL_PORT: 3306
+      MYSQL_DB_NAME: pi
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+    ports:
+      - "9003:9003"
+    depends_on:
+      - mysql
+
+  front:
+    image: med555/front:latest
+    ports:
+      - "4200:80"
