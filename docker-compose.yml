@@ -1,32 +1,15 @@
-version: '3.8'
+version: '3'
 services:
-  mysql:
-    image: mysql:latest
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: pi
-      MYSQL_USER: root
-      MYSQL_PASSWORD: root
-    ports:
-      - "3306:3306"
-    networks:
-      - app-network
-
   back:
     image: med555/back:latest
+    ports:
+      - "9000:9000"
     environment:
       MYSQL_HOST: mysql
       MYSQL_PORT: 3306
       MYSQL_DB_NAME: pi
       MYSQL_USER: root
       MYSQL_PASSWORD: root
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/pi
-      SERVER_PORT: 9000
-      SERVER_SERVLET_CONTEXT_PATH: /pi
-    depends_on:
-      - mysql
-    ports:
-      - "9000:9000"
     networks:
       - app-network
 
@@ -34,8 +17,16 @@ services:
     image: med555/front:latest
     ports:
       - "4200:80"
-    depends_on:
-      - back
+    networks:
+      - app-network
+
+  mysql:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: pi
+    ports:
+      - "3306:3306"
     networks:
       - app-network
 
