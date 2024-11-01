@@ -1,28 +1,31 @@
-version: '3.8'
+version: "3.8"
 
 services:
   mysql:
     image: mysql:5.7
+    restart: unless-stopped
     environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: pi
-    ports:
-      - "3306:3306"
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=pi
 
+    ports:
+      - 3306:3306
   back:
-    image: med555/back:latest
-    environment:
-      MYSQL_HOST: mysql
-      MYSQL_PORT: 3306
-      MYSQL_DB_NAME: pi
-      MYSQL_USER: root
-      MYSQL_PASSWORD: root
-    ports:
-      - "9003:9003"
     depends_on:
-      - mysql
-
-  front:
-    image: med555/front:latest
+      - mysqldb
+    image: med555/back:latest
+    restart: on-failure
     ports:
-      - "4200:80"
+      - 9003:9003
+    environment:
+      SPRING_APPLICATION_JSON: '{
+        "spring.datasource.url" : "jdbc:mysql://mysqldb:3306/pi?createDatabaseIfNotExist=true",
+        "spring.datasource.username" : "root",
+        "spring.datasource.password" : "root",
+        "spring.jpa.properties.hibernate.dialect" : "org.hibernate.dialect.MySQL5InnoDBDialect",
+       " spring.jpa.hibernate.ddl-auto": "update"
+      }'
+    stdin_open: true
+    tty: true
+
+
