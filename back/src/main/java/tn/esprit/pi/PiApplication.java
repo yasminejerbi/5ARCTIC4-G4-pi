@@ -27,4 +27,8 @@ public class PiApplication {
             }
         };
     }
+    @Bean
+    MeterRegistryCustomizer<MeterRegistry> metricsCommonTags() {
+        return registry -> registry.config().commonTags("application", "pi-application");
+    }
 }
