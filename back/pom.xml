@@ -51,6 +51,10 @@
             <artifactId>mssql-jdbc</artifactId>
             <version>9.4.0.jre8</version> <!-- or the latest version available -->
         </dependency>
+        <dependency>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-registry-prometheus</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
