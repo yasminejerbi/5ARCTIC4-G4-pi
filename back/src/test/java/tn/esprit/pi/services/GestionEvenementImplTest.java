@@ -6,6 +6,8 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.time.LocalDate;
 import java.util.*;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -34,38 +36,52 @@ class GestionEvenementImplTest {
         MockitoAnnotations.openMocks(this);
     }
 
+    private static final Logger logger = LogManager.getLogger(GestionEvenementImpl.class);
+
     @Test
     void testRetrieveAllEvenement() {
+        logger.info("Starting testRetrieveAllEvenement...");
+
         List<Evenement> mockEvents = new ArrayList<>();
         mockEvents.add(new Evenement(1L, "Event 1", LocalDate.now(), LocalDate.now().plusDays(5)));
         when(evenementRepository.findAll()).thenReturn(mockEvents);
 
         List<Evenement> events = gestionEvenement.retrieveAllEvenement();
+        logger.info("Retrieved events: {}", events);
 
-        assertEquals(1, events.size());
-        assertEquals("Event 1", events.get(0).getNomEvenement());
+        assertEquals(1, events.size(), "Expected exactly one event to be retrieved.");
+        assertEquals("Event 1", events.get(0).getNomEvenement(), "Expected event name to match.");
+        logger.info("testRetrieveAllEvenement executed successfully.");
     }
 
     @Test
     void testAddOrUpdateEvenement_NewEvent() {
+        logger.info("Starting testAddOrUpdateEvenement_NewEvent...");
+
         Evenement newEvent = new Evenement(2L, "New Event", LocalDate.now(), LocalDate.now().plusDays(2));
         when(evenementRepository.save(newEvent)).thenReturn(newEvent);
 
         Evenement savedEvent = gestionEvenement.addorUpdateEvenement(newEvent);
+        logger.info("Saved event: {}", savedEvent);
 
-        assertNotNull(savedEvent);
-        assertEquals(newEvent.getId(), savedEvent.getId());
+        assertNotNull(savedEvent, "Saved event should not be null.");
+        assertEquals(newEvent.getId(), savedEvent.getId(), "Expected saved event ID to match new event ID.");
         verify(evenementRepository, times(1)).save(newEvent);
+        logger.info("testAddOrUpdateEvenement_NewEvent executed successfully.");
     }
 
     @Test
     void testRemoveEvenement() {
+        logger.info("Starting testRemoveEvenement...");
+
         Evenement event = new Evenement(3L, "Event to Delete", LocalDate.now(), LocalDate.now().plusDays(3));
         when(evenementRepository.findById(event.getId())).thenReturn(Optional.of(event));
 
         gestionEvenement.removeEvenement(event.getId());
+        logger.info("Event with ID {} has been removed.", event.getId());
 
         verify(evenementRepository, times(1)).delete(event);
+        logger.info("testRemoveEvenement executed successfully.");
     }
     @Test
     public void testAssignUserToEvent_Success() {
