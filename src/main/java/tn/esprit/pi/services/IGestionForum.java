@@ -9,4 +9,6 @@ public interface IGestionForum {
     public Forum addorUpdateForum (Forum forum );
     public void removeForum (Long idForum);
     public Forum retrieveForum (Long idForum);
+   /* Forum likeForum(Long idForum);
+    Forum dislikeForum(Long idForum);*/
 }

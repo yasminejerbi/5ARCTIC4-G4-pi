@@ -33,4 +33,15 @@ public class IForumController {
     public Forum updateForum(@RequestBody  Forum forum){
         return iGestionForum.addorUpdateForum(forum);
     }
+   /* @PostMapping("/like/{idForum}")
+    public Forum likeForum(@PathVariable Long idForum) {
+        return iGestionForum.likeForum(idForum);
+    }
+
+
+    @PutMapping("/dislike/{idForum}")
+    public Forum dislikeForum(@PathVariable Long idForum) {
+        return iGestionForum.dislikeForum(idForum);
+    }*/
+
 }

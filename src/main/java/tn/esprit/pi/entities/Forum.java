@@ -26,4 +26,5 @@ public class Forum implements Serializable {
     @JsonIgnore
     private Utilisateur utilisateur;
 
+
 }

@@ -23,4 +23,22 @@ public class GestionForumImpl implements IGestionForum{
     public Forum retrieveForum (Long idForum){
         return forumRepository.findById(idForum).get();
     }
+   /*public Forum likeForum(Long idForum) {
+        Forum forum = forumRepository.findById(idForum).orElse(null);
+        if (forum != null) {
+            forum.setLikes(forum.getLikes() + 1);
+            forumRepository.save(forum);
+        }
+        return forum;
+    }
+
+    public Forum dislikeForum(Long idForum) {
+        Forum forum = forumRepository.findById(idForum).orElse(null);
+        if (forum != null) {
+            forum.setDislikes(forum.getDislikes() + 1);
+            forumRepository.save(forum);
+        }
+        return forum;
+    }*/
+
 }
