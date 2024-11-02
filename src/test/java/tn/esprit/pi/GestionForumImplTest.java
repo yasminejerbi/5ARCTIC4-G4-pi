@@ -1,4 +1,3 @@
-
 package tn.esprit.pi;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -18,6 +17,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.*;
+
 @SpringBootTest
 public class GestionForumImplTest {
 
@@ -33,7 +33,7 @@ public class GestionForumImplTest {
     }
 
     @Test
-    void testRetrieveAllForum() {
+    void testRetrieveAllForum_Successful() {
         // Arrange
         Forum forum1 = new Forum(1L, "Forum 1", "Description 1", null);
         Forum forum2 = new Forum(2L, "Forum 2", "Description 2", null);
@@ -46,11 +46,13 @@ public class GestionForumImplTest {
 
         // Assert
         assertEquals(expectedForums.size(), actualForums.size());
+        assertEquals(expectedForums.get(0), actualForums.get(0));
+        assertEquals(expectedForums.get(1), actualForums.get(1));
         verify(forumRepository, times(1)).findAll();
     }
 
     @Test
-    void testAddOrUpdateForum() {
+    void testAddOrUpdateForum_Successful() {
         // Arrange
         Forum forum = new Forum(1L, "New Forum", "New Description", null);
         when(forumRepository.save(forum)).thenReturn(forum);
@@ -61,11 +63,12 @@ public class GestionForumImplTest {
         // Assert
         assertNotNull(savedForum);
         assertEquals("New Forum", savedForum.getNomForum());
+        assertEquals(1L, savedForum.getId());
         verify(forumRepository, times(1)).save(forum);
     }
 
     @Test
-    void testRemoveForum() {
+    void testRemoveForum_Successful() {
         // Arrange
         long forumId = 1L;
         Forum forum = new Forum(forumId, "Forum to delete", "Description", null);
@@ -79,7 +82,7 @@ public class GestionForumImplTest {
     }
 
     @Test
-    void testRetrieveForum() {
+    void testRetrieveForum_Successful() {
         // Arrange
         long forumId = 1L;
         Forum forum = new Forum(forumId, "Retrieved Forum", "Description", null);
@@ -91,7 +94,7 @@ public class GestionForumImplTest {
         // Assert
         assertNotNull(retrievedForum);
         assertEquals(forumId, retrievedForum.getId());
+        assertEquals("Retrieved Forum", retrievedForum.getNomForum());
         verify(forumRepository, times(1)).findById(forumId);
     }
 }
-

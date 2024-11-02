@@ -1,3 +1,4 @@
+/*
 pipeline {
     agent any
     tools {
@@ -22,7 +23,8 @@ pipeline {
         stage('Verify Build') {
             steps {
                 // Verify that the JAR file is created
-                sh 'ls -l target/*.jar'
+                sh 'ls -l target */
+/*.jar'
             }
         }
     }
@@ -33,6 +35,53 @@ pipeline {
         }
         failure {
             echo 'Build failed. Check the logs for errors.'
+        }
+    }
+} */
+pipeline {
+    agent any
+
+    tools {
+        jdk 'JAVA_HOME'
+        maven 'M2_HOME'
+    }
+
+    stages {
+        stage('Clean') {
+            steps {
+                // Clean the project
+                sh 'mvn clean'
+            }
+        }
+
+        stage('Compile') {
+            steps {
+                // Compile the project
+                sh 'mvn compile'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                // Build the project (e.g., package or install)
+                sh 'mvn package'  // or 'mvn install'
+            }
+        }
+
+        stage('Run Tests') {
+            steps {
+                // Run tests with Maven
+                sh 'mvn test'
+            }
+        }
+
+        stage('SonarQube Analysis') {
+            steps {
+                // Use the SonarQube scanner directly
+                withSonarQubeEnv('sonarQube1') {
+                    sh 'mvn sonar:sonar -Dsonar.host.url=http://192.168.33.10:9000/'
+                }
+            }
         }
     }
 }
