@@ -14,10 +14,10 @@ pipeline {
             }
         }
 
-        stage('Start Application') {
+        stage('Run Tests') {
             steps {
-                // Start the Spring application and keep it running
-                sh 'mvn spring-boot:run'
+                // Run tests with Maven
+                sh 'mvn test'
             }
         }
     }
