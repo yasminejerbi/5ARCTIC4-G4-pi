@@ -21,7 +21,7 @@ public class PiApplication {
                     @Override
                     public void addCorsMappings(CorsRegistry registry) {
                         registry.addMapping("/**")
-                                .allowedOrigins("http://localhost:4200") // Permet les requêtes depuis votre front-end
+                                .allowedOrigins("http://192.168.219.135:4200") // Permet les requêtes depuis votre front-end
                                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                                 .allowedHeaders("*")
                                 .allowCredentials(true);

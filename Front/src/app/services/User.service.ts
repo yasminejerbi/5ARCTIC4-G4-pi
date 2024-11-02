@@ -11,22 +11,22 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class UserService {
-  private ajouterurl ='http://localhost:9003/pi/utilisateur/ajout';
-  private updateUrl='http://localhost:9003/pi/utilisateur/update';
+  private ajouterurl ='http://192.168.219.135:9003/pi/utilisateur/ajout';
+  private updateUrl='http://192.168.219.135:9003/pi/utilisateur/update';
   constructor(private http: HttpClient) { }
 
-  private verifyEmailUrl = 'http://localhost:9003/pi/utilisateur/verify-email'
+  private verifyEmailUrl = 'http://192.168.219.135:9003/pi/utilisateur/verify-email'
    /*ajouterUser(User: User): Observable<User> {
     return this.http.post<User>(this.ajouterurl, User, httpOptions);
   }*/
   getAll(){
-    return this.http.get<User[]>('http://localhost:9003/pi/utilisateur/getAll')
+    return this.http.get<User[]>('http://192.168.219.135:9003/pi/utilisateur/getAll')
   }
   getUserById(id:number){
-    return this.http.get<User>('http://localhost:9003/pi/utilisateur/getUtilisateurId/'+id)
+    return this.http.get<User>('http://192.168.219.135:9003/pi/utilisateur/getUtilisateurId/'+id)
   }
   recupererMDP(email:String,numTel:String){
-    return this.http.get<number>('http://localhost:9003/pi/utilisateur/mdp/'+email+'/'+numTel)
+    return this.http.get<number>('http://192.168.219.135:9003/pi/utilisateur/mdp/'+email+'/'+numTel)
   }
  /* updateUser(user:User){
     return this.http.put('http://localhost:9000/pi/utilisateur/updateUtilisateur',user)

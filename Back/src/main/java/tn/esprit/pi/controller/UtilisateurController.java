@@ -8,18 +8,17 @@ import org.springframework.web.multipart.MultipartFile;
 import tn.esprit.pi.entities.Interet;
 import tn.esprit.pi.entities.Role;
 import tn.esprit.pi.entities.Utilisateur;
-import tn.esprit.pi.services.EmailVerificationService;
 import tn.esprit.pi.services.IGestionUtilisateur;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
 @RestController
-@CrossOrigin("*")
+//@CrossOrigin("*")
+@CrossOrigin(origins = "http://http://192.168.219.135:4200")
 @RequestMapping("/utilisateur")
 public class UtilisateurController {
     @Autowired
