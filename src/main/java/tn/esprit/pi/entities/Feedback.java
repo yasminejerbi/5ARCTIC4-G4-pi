@@ -28,7 +28,7 @@ public class Feedback implements Serializable {
 
 
 
-    enum CategorieType {
+    public enum CategorieType {
       negatif,
         positif,
         neutre,

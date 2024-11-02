@@ -55,7 +55,7 @@ public class FeedbackController {
     }
 
     private void sendFeedbackEmail(Feedback feedback) throws MessagingException {
-        String to = "frikha540@gmail.com"; // Adresse e-mail statique
+        String to = "anasham679@gmail.com"; // Adresse e-mail statique
         String subject = "Confirmation de réclamation";
         String text =
                 "\n" +
