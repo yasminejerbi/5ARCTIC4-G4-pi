@@ -79,7 +79,7 @@ pipeline {
             steps {
                 // Use the SonarQube scanner directly
                 withSonarQubeEnv('sonarQube1') {
-                    sh 'mvn sonar:sonar -Dsonar.host.url=http://192.168.33.10:9000/'
+                    sh 'mvn sonar:sonar -Dsonar.projectKey=your_project_key -Dsonar.host.url=http://192.168.33.10:9000 -Dsonar.login=$SONAR_TOKEN'
                 }
             }
         }
