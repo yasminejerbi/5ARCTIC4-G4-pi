@@ -47,7 +47,7 @@ class GestionEvenementImplTest {
         when(evenementRepository.findAll()).thenReturn(mockEvents);
 
         List<Evenement> events = gestionEvenement.retrieveAllEvenement();
-        logger.info("Retrieved events: {}", events);
+        logger.info("Retrieved events: {}", events.toString());
 
         assertEquals(1, events.size(), "Expected exactly one event to be retrieved.");
         assertEquals("Event 1", events.get(0).getNomEvenement(), "Expected event name to match.");
@@ -62,7 +62,7 @@ class GestionEvenementImplTest {
         when(evenementRepository.save(newEvent)).thenReturn(newEvent);
 
         Evenement savedEvent = gestionEvenement.addorUpdateEvenement(newEvent);
-        logger.info("Saved event: {}", savedEvent);
+        logger.info("Saved event: {}", savedEvent.toString());
 
         assertNotNull(savedEvent, "Saved event should not be null.");
         assertEquals(newEvent.getId(), savedEvent.getId(), "Expected saved event ID to match new event ID.");

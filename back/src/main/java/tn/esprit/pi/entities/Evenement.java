@@ -72,4 +72,14 @@ public class Evenement implements Serializable {
         this.dateDebut = now;
         this.dateFin = localDate;
     }
+    @Override
+    public String toString() {
+        return "Evenement{" +
+                "id=" + id +
+                ", nomEvenement='" + nomEvenement + '\'' +
+                ", startDate=" + dateDebut +
+                ", endDate=" + getDateFin() +
+                '}';
+    }
+
 }
