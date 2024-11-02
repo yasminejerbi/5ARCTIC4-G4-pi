@@ -5,7 +5,7 @@ import { catchError } from 'rxjs/operators';
 import { User } from 'src/app/model/User';
 
 const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' ,'Access-Control-Allow-Origin': 'http://localhost:4200'})
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' ,'Access-Control-Allow-Origin': 'http://192.168.219.135:4200'})
 };
 @Injectable({
   providedIn: 'root'
