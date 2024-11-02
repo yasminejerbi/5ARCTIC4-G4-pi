@@ -12,23 +12,23 @@ public class PiApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(PiApplication.class, args);
-        @Configuration
-         class GlobalCorsConfig {
-
-            @Bean
-            public WebMvcConfigurer corsConfigurer() {
-                return new WebMvcConfigurer() {
-                    @Override
-                    public void addCorsMappings(CorsRegistry registry) {
-                        registry.addMapping("/**")
-                                .allowedOrigins("http://192.168.219.135:4200") // Permet les requêtes depuis votre front-end
-                                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
-                                .allowedHeaders("*")
-                                .allowCredentials(true);
-                    }
-                };
-            }
-        }
     }
+}
 
+@Configuration
+class GlobalCorsConfig {
+
+    @Bean
+    public WebMvcConfigurer corsConfigurer() {
+        return new WebMvcConfigurer() {
+            @Override
+            public void addCorsMappings(CorsRegistry registry) {
+                registry.addMapping("/**")
+                        .allowedOrigins("http://192.168.219.135:4200")
+                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+                        .allowedHeaders("*")
+                        .allowCredentials(true);
+            }
+        };
+    }
 }
