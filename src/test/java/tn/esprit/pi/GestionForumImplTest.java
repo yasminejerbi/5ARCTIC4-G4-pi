@@ -1,13 +1,15 @@
 
-package tn.esprit.pi.services;
+package tn.esprit.pi;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.boot.test.context.SpringBootTest;
 import tn.esprit.pi.entities.Forum;
 import tn.esprit.pi.repository.IForumRepository;
+import tn.esprit.pi.services.GestionForumImpl;
 
 import java.util.Arrays;
 import java.util.List;
@@ -16,7 +18,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.*;
-
+@SpringBootTest
 public class GestionForumImplTest {
 
     @Mock
