@@ -1,0 +1,25 @@
+<form [formGroup]="ForumForm" (ngSubmit)="persistUser()">
+ <h3 class="titre">Ajouter une description/question</h3>
+<div class="form-group">
+    <div class="input-group mb-3">
+    <div class="input-group-prepend">
+        <span class="input-group-text" id="basic-addon1" style="font-family:Anton, sans-serif;width: 100px; margin-left: 50px;">Nom Forum</span>
+    </div>
+    <input  type="text" class="form-control" formControlName="nomForum" placeholder="nomForum" name="title" aria-describedby="basic-addon1">
+    <div>
+    <div *ngIf="ForumForm.get('nomForum')?.hasError('minlength')">Title should be at least 3 characters</div>
+    <div *ngIf="containsBadWords(ForumForm.value)">
+        This title contains a bad word.
+      </div>
+    </div>
+</div>
+<div class="input-group mb-3">
+  <div class="input-group-prepend">
+      <span class="input-group-text" id="basic-addon1" style="font-family:Anton, sans-serif;width: 100px; margin-left: 50px;">description</span>
+  </div>
+  <input  type="text" class="form-control" placeholder="description" formControlName="description" name="description"  aria-describedby="basic-addon1">
+</div>
+<!-- <button type="submit" color="primary"  >Register</button> -->
+ <button mat-raised-button color="primary"style=" margin-left: 50px;">Envoyer</button>  
+ </div>
+</form> 
