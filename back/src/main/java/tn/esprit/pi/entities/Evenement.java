@@ -65,4 +65,11 @@ public class Evenement implements Serializable {
         this.eventType = eventType;
 
     }
+
+    public Evenement(long l, String s, LocalDate now, LocalDate localDate) {
+        this.id = l;
+        this.nomEvenement = s;
+        this.dateDebut = now;
+        this.dateFin = localDate;
+    }
 }
