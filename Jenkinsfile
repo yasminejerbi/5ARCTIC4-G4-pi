@@ -87,12 +87,19 @@ pipeline {
                 }
             }
         }
+
+        stage('docker_compose') {
+            steps {
+                sh 'docker compose up --build'
+            }
+        }
+
     }
 
-    post {
+    /*post {
         always {
             // Clean up workspace after pipeline execution
             cleanWs()
         }
-    }
+    }*/
 }
