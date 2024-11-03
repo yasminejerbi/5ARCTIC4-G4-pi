@@ -88,7 +88,7 @@
     <distributionManagement>
         <repository>
             <id>deploymentRepo</id>
-            <url>http://192.168.127.154:8081/repository/maven-releases/</url>
+            <url>http://192.168.33.10:8081/repository/maven-releases/</url>
             <releases>
                 <enabled>true</enabled>
             </releases>
@@ -98,7 +98,7 @@
         </repository>
         <snapshotRepository>
             <id>deploymentSnapshotRepo</id> <!-- Ensure this matches your settings.xml -->
-            <url>http://192.168.127.154:8081/repository/maven-snapshots/</url>
+            <url>http://192.168.33.10:8081/repository/maven-snapshots/</url>
         </snapshotRepository>
     </distributionManagement>
 </project>
