@@ -1,3 +1,4 @@
+version: '3'
 services:
   mysql:
     image: mysql:5.7
@@ -23,8 +24,10 @@ services:
         "spring.datasource.username" : "root",
         "spring.datasource.password" : "root",
         "spring.jpa.properties.hibernate.dialect" : "org.hibernate.dialect.MySQLDialect",
-        "spring.jpa.hibernate.ddl-auto": "update"}'
-   
+        "spring.jpa.hibernate.ddl-auto": "update",
+        "management.endpoints.web.exposure.include": "health,info,prometheus",
+        "management.endpoint.prometheus.enabled": "true",
+        "management.server.port": "9003"}'
     stdin_open: true
     tty: true
     networks:
@@ -36,6 +39,15 @@ services:
       - "4200:80"
     depends_on:
       - back
+    networks:
+      - app-network
+
+  prometheus:
+    image: prom/prometheus
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
     networks:
       - app-network
 
