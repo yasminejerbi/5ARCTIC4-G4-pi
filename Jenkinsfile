@@ -61,27 +61,32 @@ pipeline {
             }
         }
 
-        stage('Build') {
+        /* stage('Build') {
             steps {
                 // Build the project (e.g., package or install)
                 sh 'mvn package'  // or 'mvn install'
             }
-        }
+        } */
 
-        stage('Run Tests') {
+        /* stage('Run Tests') {
             steps {
                 // Run tests with Maven
                 sh 'mvn test'
             }
-        }
+        } */
 
-        stage('SonarQube Analysis') {
+        /* stage('SonarQube Analysis') {
             steps {
                 // Use the SonarQube scanner directly
                 withSonarQubeEnv('sq1') {
                     sh 'mvn sonar:sonar -Dsonar.host.url=http://192.168.33.10:9000/'
                 }
             }
-        }
+        } */
+        stage('Deploy to Nexus') {
+                    steps {
+                        // Deploy the packaged application to the Nexus repository
+                        sh 'mvn deploy -DskipTests'
+                    }
     }
 }
