@@ -4,10 +4,10 @@ FROM openjdk:17
 WORKDIR /app
 
 # Copy the JAR file from the host to the container
-COPY target/Pi-0.0.1-SNAPSHOT.jar ./Pi-0.0.1-SNAPSHOT.jar
+COPY target/Pi-1.0.jar ./Pi-1.0.jar
 
 # Expose the port your Spring Boot app listens on (change if needed)
-EXPOSE 80
+EXPOSE 9003
 
 # Run the JAR file when the container starts
-CMD ["java", "-jar", "Pi-0.0.1-SNAPSHOT.jar"]
+CMD ["java", "-jar", "Pi-1.0.jar"]
