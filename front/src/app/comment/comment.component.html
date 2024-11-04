@@ -1,0 +1,21 @@
+<form [formGroup]="CommentForm" (ngSubmit)="addcomment()">
+   <div class="form-group">
+<div class="input-group-prepend">
+    <span class="input-group-text" id="basic-addon1" style="font-family:Anton, sans-serif;width: 100px; margin-left: 50px;">add comment</span>
+</div>
+<input  type="text" class="form-control" formControlName="add Comment" placeholder="content" name="content" aria-describedby="basic-addon1">
+<div>
+    </div>
+<div class="col">
+    <button mat-raised-button style="background-color: #ff4533; color:#fefefe; margin-left: 80px; font-family:Anton, sans-serif ;" type="submit" >Add comment </button>
+</div>
+</div>
+</form>
+<mat-card class="cd" *ngFor="let c of comments" >
+    
+        <mat-card-header >
+              <mat-card-title class="mat-card-title"> Content: {{ c.content }}</mat-card-title>
+             
+      
+    </mat-card-header>
+</mat-card> 
