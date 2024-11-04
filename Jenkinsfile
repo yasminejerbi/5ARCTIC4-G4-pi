@@ -13,7 +13,7 @@ pipeline {
 
     stages {
         // ------------------- Backend Stages -------------------
-        stage('Backend - Clean') {
+        /*stage('Backend - Clean') {
             steps {
                 dir('backend') {
                     // Clean the backend project
@@ -40,14 +40,14 @@ pipeline {
             }
         }*/
 
-        stage('Backend - Build') {
+        /*stage('Backend - Build') {
             steps {
                 dir('backend') {
                     // Package the backend application
                     sh 'mvn package'
                 }
             }
-        }
+        }*/
 
         /*stage('Backend - SonarQube Analysis') {
             steps {
@@ -70,7 +70,7 @@ pipeline {
         }*/
 
         // ------------------- Frontend Stages -------------------
-        stage('Frontend - Install Dependencies') {
+        /*stage('Frontend - Install Dependencies') {
             steps {
                 dir('frontend') {
                     // Install frontend dependencies
@@ -86,7 +86,7 @@ pipeline {
                     sh 'npm run build'  // Adjust if your frontend build script is named differently
                 }
             }
-        }
+        }*/
 
         stage('docker_compose') {
             steps {
