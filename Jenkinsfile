@@ -32,14 +32,14 @@ pipeline {
             }
         }
 
-        /*stage('Backend - Run Tests') {
+        stage('Backend - Run Tests') {
             steps {
                 dir('backend') {
                     // Run tests for the backend
                     sh 'mvn test'
                 }
             }
-        }*/
+        }
 
         stage('Backend - Build') {
             steps {
@@ -50,7 +50,7 @@ pipeline {
             }
         }
 
-        /*stage('Backend - SonarQube Analysis') {
+        stage('Backend - SonarQube Analysis') {
             steps {
                 dir('backend') {
                     // Run SonarQube analysis for code quality
@@ -68,7 +68,7 @@ pipeline {
                     sh 'mvn deploy -DskipTests'
                 }
             }
-        }*/
+        }
 
         // ------------------- Frontend Stages -------------------
         stage('Frontend - Install Dependencies') {
@@ -90,27 +90,27 @@ pipeline {
         }
 
         stage('Build Docker Image') {
-    steps {
-        echo 'Building Docker images'
-        sh "docker build -t ${DOCKER_HUB_REPO}/back:latest -f backend/Dockerfile ./backend"
-        sh "docker build -t ${DOCKER_HUB_REPO}/front:latest -f frontend/Dockerfile ./frontend"
-    }
-}
+            steps {
+                echo 'Building Docker images'
+                sh "docker build -t ${DOCKER_HUB_REPO}/back:latest -f backend/Dockerfile ./backend"
+                sh "docker build -t ${DOCKER_HUB_REPO}/front:latest -f frontend/Dockerfile ./frontend"
+            }
+        }
 
         stage('Push to Docker Hub') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'docker_token', usernameVariable: 'DOCKER_HUB_USERNAME', passwordVariable: 'DOCKER_HUB_PASSWORD')]) {
-                    sh 'docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_PASSWORD}'
+                    sh "docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_PASSWORD}"
                     sh "docker push ${DOCKER_HUB_REPO}/back:latest"
                     sh "docker push ${DOCKER_HUB_REPO}/front:latest"
                 }
             }
         }
 
-        stage('docker_compose') {
+        stage('Docker Compose') {
             steps {
                 sh 'docker-compose down || true'
-                sh 'docker compose up --build -d'
+                sh 'docker-compose up --build -d'
             }
         }
     }
