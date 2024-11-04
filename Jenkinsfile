@@ -90,27 +90,27 @@ pipeline {
         }
 
         stage('Build Docker Image') {
-    steps {
-        echo 'Building Docker images'
-        sh "docker build -t ${DOCKER_HUB_REPO}/back:latest -f back/Dockerfile ./back"
-        sh "docker build -t ${DOCKER_HUB_REPO}/front:latest -f front/Dockerfile ./front"
-    }
-}
+            steps {
+                echo 'Building Docker images'
+                sh "docker build -t ${DOCKER_HUB_REPO}/back:latest -f back/Dockerfile ./back"
+                sh "docker build -t ${DOCKER_HUB_REPO}/front:latest -f front/Dockerfile ./front"
+            }
+        }
 
         stage('Push to Docker Hub') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'docker-jenkins', usernameVariable: 'DOCKER_HUB_USERNAME', passwordVariable: 'DOCKER_HUB_PASSWORD')]) {
-                    sh 'docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_PASSWORD}'
+                    sh "docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_PASSWORD}"
                     sh "docker push ${DOCKER_HUB_REPO}/back:latest"
                     sh "docker push ${DOCKER_HUB_REPO}/front:latest"
                 }
             }
         }
 
-        stage('docker_compose') {
+        stage('Docker Compose') {
             steps {
-                sh 'docker-compose down || true'
-                sh 'docker-compose up --build -d'
+                sh 'docker compose down || true'
+                sh 'docker compose up --build -d'
             }
         }
     }
