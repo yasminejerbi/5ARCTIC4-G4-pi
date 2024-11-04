@@ -71,7 +71,7 @@ pipeline {
 
         // ------------------- Frontend Stages -------------------
         stage('Frontend - Install Dependencies') {
-            agent { label 'slave_ubuntu_build' }
+            agent { label 'master' }
             steps {
                 dir('frontend') {
                     sh 'npm install'
@@ -80,7 +80,7 @@ pipeline {
         }
 
         stage('Frontend - Build') {
-            agent { label 'slave_ubuntu_build' }
+            agent { label 'master' }
             steps {
                 dir('frontend') {
                     sh 'npm run build'
