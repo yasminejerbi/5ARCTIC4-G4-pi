@@ -24,7 +24,7 @@ pipeline {
         }
 
         stage('Backend - Compile') {
-            agent { node { label '' } }  // Run on the master
+            agent { label 'built-in node' }  // Run on the master
             steps {
                 dir('backend') {
                     sh 'mvn clean compile'
@@ -33,7 +33,7 @@ pipeline {
         }
 
         stage('Backend - Run Tests') {
-            agent { node { label '' } }  // Run on the master
+            agent { label 'built-in node' }  // Run on the master
             steps {
                 dir('backend') {
                     sh 'mvn test'
@@ -42,7 +42,7 @@ pipeline {
         }
 
         stage('Backend - Build') {
-            agent { node { label '' } }  // Run on the master
+            agent { label 'built-in node' }  // Run on the master
             steps {
                 dir('backend') {
                     sh 'mvn package'
@@ -51,7 +51,7 @@ pipeline {
         }
 
         stage('Backend - SonarQube Analysis') {
-            agent { node { label '' } }  // Run on the master
+            agent { label 'built-in node' }  // Run on the master
             steps {
                 dir('backend') {
                     withSonarQubeEnv('sonarQube1') {
@@ -62,7 +62,7 @@ pipeline {
         }
 
         stage('Backend - Deploy to Nexus') {
-            agent { node { label '' } }  // Run on the master
+            agent { label 'built-in node' }  // Run on the master
             steps {
                 dir('backend') {
                     sh 'mvn deploy -DskipTests'
@@ -72,7 +72,7 @@ pipeline {
 
         // ------------------- Frontend Stages -------------------
         stage('Frontend - Install Dependencies') {
-            agent { node { label '' } }  // Run on the master
+            agent { label 'built-in node' }  // Run on the master
             steps {
                 dir('frontend') {
                     sh 'npm install'
@@ -81,7 +81,7 @@ pipeline {
         }
 
         stage('Frontend - Build') {
-            agent { node { label '' } }  // Run on the master
+            agent { label 'built-in node' } // Run on the master
             steps {
                 dir('frontend') {
                     sh 'npm run build'
@@ -90,7 +90,7 @@ pipeline {
         }
 
         stage('Build Docker Image') {
-            agent { node { label '' } }  // Run on the master
+            agent { label 'built-in node' }  // Run on the master
             steps {
                 echo 'Building Docker images'
                 sh "docker build -t ${DOCKER_HUB_REPO}/back:latest -f backend/Dockerfile ./backend"
@@ -99,7 +99,7 @@ pipeline {
         }
 
         stage('Push to Docker Hub') {
-            agent { node { label '' } }  // Run on the master
+            agent { label 'built-in node' } // Run on the master
             steps {
                 withCredentials([usernamePassword(credentialsId: 'docker_token', usernameVariable: 'DOCKER_HUB_USERNAME', passwordVariable: 'DOCKER_HUB_PASSWORD')]) {
                     sh "docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_PASSWORD}"
@@ -110,7 +110,7 @@ pipeline {
         }
 
         stage('Docker Compose') {
-            agent { node { label '' } }  // Run on the master
+            agent { label 'built-in node' }  // Run on the master
             steps {
                 sh 'docker compose down || true'
                 sh 'docker compose up --build -d'
