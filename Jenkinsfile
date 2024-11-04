@@ -90,7 +90,7 @@ pipeline {
 
         stage('docker_compose') {
             steps {
-                sh 'docker compose up --build'
+                sh 'docker compose up --build -d'
             }
         }
 
