@@ -1,49 +1,46 @@
 version: '3.8'
 
 services:
-  frontend:
-    image: firashlel/frontimage
+  mysql:
+    image: mysql:5.7
+    restart: unless-stopped
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=pi
     ports:
-      - "8082:80"
-    volumes:
-      - uploads:/app/uploads
+      - "3306:3306"
     networks:
-      - Network
+      - app-network
 
-  backend:
-    image: firashlel/backimage
+  back:
+    depends_on:
+      - mysql
+    image: firashlel/backimage:latest
+    restart: on-failure
     ports:
       - "9001:9000"
     environment:
-      MYSQL_HOST: mysqlcon
-      MYSQL_PORT: 3306
-      MYSQL_DB_NAME: pi
-      MYSQL_USER: root
-      MYSQL_PASSWORD: root
-      SERVER_PORT: 9000
-    volumes:
-      - uploads:/app/uploads
-    depends_on:
-      - mysql
+      SPRING_APPLICATION_JSON: '{
+        "spring.datasource.url" : "jdbc:mysql://mysql:3306/pi?createDatabaseIfNotExist=true",
+        "spring.datasource.username" : "root",
+        "spring.datasource.password" : "root",
+        "spring.jpa.properties.hibernate.dialect" : "org.hibernate.dialect.MySQLDialect",
+        "spring.jpa.hibernate.ddl-auto": "update"}'
+    stdin_open: true
+    tty: true
     networks:
-      - Network
+      - app-network
 
-  mysql:
-    image: mysql:8.0.36
-    container_name: mysqlcon
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: pi
+  front:
+    image: firashlel/frontimage:latest
     ports:
-      - "3306:3306"
-    volumes:
-      - mysql_dt:/var/lib/mysql
+      - "8082:80"
+    depends_on:
+      - back
     networks:
-      - Network
+      - app-network
 
-volumes:
-  uploads:
-  mysql_dt:
-
+  
 networks:
-  Network:
+  app-network:
+    driver: bridge
