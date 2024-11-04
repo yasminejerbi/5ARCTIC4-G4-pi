@@ -16,7 +16,7 @@ pipeline {
         // ------------------- Backend Stages -------------------
         stage('Backend - Clean') {
             steps {
-                dir('backend') {
+                dir('back') {
                     // Clean the backend project
                     sh 'mvn clean'
                 }
@@ -25,7 +25,7 @@ pipeline {
 
         stage('Backend - Compile') {
             steps {
-                dir('backend') {
+                dir('back') {
                     // Compile the backend project
                     sh 'mvn compile'
                 }
@@ -43,7 +43,7 @@ pipeline {
 
         stage('Backend - Build') {
             steps {
-                dir('backend') {
+                dir('back') {
                     // Package the backend application
                     sh 'mvn package'
                 }
@@ -73,7 +73,7 @@ pipeline {
         // ------------------- Frontend Stages -------------------
         stage('Frontend - Install Dependencies') {
             steps {
-                dir('frontend') {
+                dir('front') {
                     // Install frontend dependencies
                     sh 'npm install'
                 }
@@ -82,7 +82,7 @@ pipeline {
 
         stage('Frontend - Build') {
             steps {
-                dir('frontend') {
+                dir('front') {
                     // Build the frontend application
                     sh 'npm run build'  // Adjust if your frontend build script is named differently
                 }
