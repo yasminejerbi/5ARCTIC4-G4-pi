@@ -9,6 +9,7 @@ pipeline {
     environment {
         // Set SonarQube environment and Nexus URL if needed
         SONAR_HOST_URL = 'http://192.168.224.130:9000'
+        DOCKER_HUB_REPO = 'anashammou37' 
     }
 
     stages {
@@ -88,18 +89,36 @@ pipeline {
             }
         }
 
-        stage('docker_compose') {
+        stage('Build Docker Image') {
+    steps {
+        echo 'Building Docker images'
+        sh "docker build -t ${DOCKER_HUB_REPO}/back:latest -f Back/dockerfile ./Back"
+        sh "docker build -t ${DOCKER_HUB_REPO}/front:latest -f Front/dockerfile ./Front"
+    }
+}
+
+        stage('Push to Docker Hub') {
             steps {
-                sh 'docker compose up --build -d'
+                withCredentials([usernamePassword(credentialsId: 'docker_token', usernameVariable: 'DOCKER_HUB_USERNAME', passwordVariable: 'DOCKER_HUB_PASSWORD')]) {
+                    sh 'docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_PASSWORD}'
+                    sh "docker push ${DOCKER_HUB_REPO}/back:latest"
+                    sh "docker push ${DOCKER_HUB_REPO}/front:latest"
+                }
             }
         }
 
+        stage('docker_compose') {
+            steps {
+                sh 'docker-compose down || true'
+                sh 'docker compose up --build -d'
+            }
+        }
     }
 
-    /*post {
+    post {
         always {
             // Clean up workspace after pipeline execution
             cleanWs()
         }
-    }*/
+    }
 }
