@@ -7,7 +7,7 @@ WORKDIR /app
 COPY target/Pi-0.0.1-SNAPSHOT.jar ./Pi-0.0.1-SNAPSHOT.jar
 
 # Expose the port your Spring Boot app listens on (change if needed)
-EXPOSE 9000
+EXPOSE 9003
 
 # Run the JAR file when the container starts
 CMD ["java", "-jar", "Pi-0.0.1-SNAPSHOT.jar"]
