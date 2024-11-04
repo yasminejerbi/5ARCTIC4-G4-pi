@@ -32,7 +32,78 @@ services:
       }'
     stdin_open: true
     tty: true
+    networks:version: '3.8'
+
+services:
+  mysql:
+    image: mysql:5.7
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: anasanas
+      MYSQL_DATABASE: pi
+    command: --bind-address=0.0.0.0
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
     networks:
+      - app-network
+    ports:
+      - 3307:3306
+
+  back:
+    depends_on:
+      mysql:
+        condition: service_healthy
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    restart: on-failure
+    ports:
+      - 9003:9003
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/pi?createDatabaseIfNotExist=true&serverTimezone=UTC&useSSL=false
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: anasanas
+      SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.MySQLDialect
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      SPRING_DATASOURCE_INITIALIZE: false
+      SPRING_DATASOURCE_CONTINUITY: true
+      SPRING_DATASOURCE_MAX-ACTIVE: 50
+      SPRING_DATASOURCE_MAX-WAIT: 30000
+      SPRING_DATASOURCE_MIN-IDLE: 5
+      SPRING_DATASOURCE_TIME-BETWEEN-EVICTION-RUNS-MILLIS: 30000
+      SPRING_DATASOURCE_MIN-EVICTABLE-IDLE-TIME-MILLIS: 30000
+      SPRING_DATASOURCE_TEST-WHILE-IDLE: true
+      SPRING_DATASOURCE_TEST-ON-BORROW: true
+      SPRING_DATASOURCE_VALIDATION-QUERY: SELECT 1
+    stdin_open: true
+    tty: true
+    networks:
+      - app-network
+    command: >
+      sh -c "
+        echo 'Waiting for MySQL to start...';
+        sleep 15;
+        java -jar /app.jar
+      "
+
+  front:
+    depends_on:
+      - back
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "4200:80"
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
       - app-network
 
   front:
