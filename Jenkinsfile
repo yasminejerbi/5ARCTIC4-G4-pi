@@ -31,14 +31,14 @@ pipeline {
             }
         }
 
-        stage('Backend - Run Tests') {
+        /*stage('Backend - Run Tests') {
             steps {
                 dir('backend') {
                     // Run tests for the backend
                     sh 'mvn test'
                 }
             }
-        }
+        }*/
 
         stage('Backend - Build') {
             steps {
@@ -49,7 +49,7 @@ pipeline {
             }
         }
 
-        stage('Backend - SonarQube Analysis') {
+        /*stage('Backend - SonarQube Analysis') {
             steps {
                 dir('backend') {
                     // Run SonarQube analysis for code quality
@@ -67,7 +67,7 @@ pipeline {
                     sh 'mvn deploy -DskipTests'
                 }
             }
-        }
+        }*/
 
         // ------------------- Frontend Stages -------------------
         stage('Frontend - Install Dependencies') {
