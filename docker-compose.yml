@@ -1,0 +1,44 @@
+services:
+  mysql:
+    image: mysql:5.7
+    restart: unless-stopped
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=pi
+    ports:
+      - 3306:3306
+    networks:
+      - app-network
+
+  back:
+    depends_on:
+      - mysql
+    image: med555/back:latest
+    restart: on-failure
+    ports:
+      - 9003:9000
+    environment:
+      SPRING_APPLICATION_JSON: '{
+        "spring.datasource.url" : "jdbc:mysql://mysql:3306/pi?createDatabaseIfNotExist=true",
+        "spring.datasource.username" : "root",
+        "spring.datasource.password" : "root",
+        "spring.jpa.properties.hibernate.dialect" : "org.hibernate.dialect.MySQLDialect",
+        "spring.jpa.hibernate.ddl-auto": "update"}'
+   
+    stdin_open: true
+    tty: true
+    networks:
+      - app-network
+
+  front:
+    image: med555/front:latest
+    ports:
+      - "4200:80"
+    depends_on:
+      - back
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
