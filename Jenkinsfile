@@ -32,14 +32,14 @@ pipeline {
             }
         }
 
-        /*stage('Backend - Run Tests') {
+        stage('Backend - Run Tests') {
             steps {
-                dir('backend') {
+                dir('back') {
                     // Run tests for the backend
                     sh 'mvn test'
                 }
             }
-        }*/
+        }
 
         stage('Backend - Build') {
             steps {
@@ -50,11 +50,11 @@ pipeline {
             }
         }
 
-        /*stage('Backend - SonarQube Analysis') {
+        stage('Backend - SonarQube Analysis') {
             steps {
                 dir('backend') {
                     // Run SonarQube analysis for code quality
-                    withSonarQubeEnv('sonarQube1') {
+                    withSonarQubeEnv('sq1') {
                         sh "mvn sonar:sonar -Dsonar.host.url=${SONAR_HOST_URL}"
                     }
                 }
@@ -63,12 +63,12 @@ pipeline {
 
         stage('Backend - Deploy to Nexus') {
             steps {
-                dir('backend') {
+                dir('back') {
                     // Deploy the backend application to Nexus
                     sh 'mvn deploy -DskipTests'
                 }
             }
-        }*/
+        }
 
         // ------------------- Frontend Stages -------------------
         stage('Frontend - Install Dependencies') {
