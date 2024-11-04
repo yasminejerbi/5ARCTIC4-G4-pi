@@ -1,5 +1,5 @@
 pipeline {
-    agent none
+    agent any
 
     tools {
         jdk 'JAVA_HOME'
@@ -7,14 +7,14 @@ pipeline {
     }
 
     environment {
+        // Set SonarQube environment and Nexus URL if needed
         SONAR_HOST_URL = 'http://192.168.224.130:9000'
-        DOCKER_HUB_REPO = 'anashammou37'
+        DOCKER_HUB_REPO = 'anashammou37' 
     }
 
     stages {
         // ------------------- Backend Stages -------------------
         stage('Backend - Clean') {
-            agent { label 'slave_ubuntu_build' }  // Specify the agent (slave) label for this stage
             steps {
                 dir('backend') {
                     // Clean the backend project
@@ -24,36 +24,36 @@ pipeline {
         }
 
         stage('Backend - Compile') {
-            agent { node { label '' } }  // Run on the master
             steps {
                 dir('backend') {
-                    sh 'mvn clean compile'
+                    // Compile the backend project
+                    sh 'mvn compile'
                 }
             }
         }
 
         stage('Backend - Run Tests') {
-            agent { node { label '' } }  // Run on the master
             steps {
                 dir('backend') {
+                    // Run tests for the backend
                     sh 'mvn test'
                 }
             }
         }
 
         stage('Backend - Build') {
-            agent { node { label '' } }  // Run on the master
             steps {
                 dir('backend') {
+                    // Package the backend application
                     sh 'mvn package'
                 }
             }
         }
 
         stage('Backend - SonarQube Analysis') {
-            agent { node { label '' } }  // Run on the master
             steps {
                 dir('backend') {
+                    // Run SonarQube analysis for code quality
                     withSonarQubeEnv('sonarQube1') {
                         sh "mvn sonar:sonar -Dsonar.host.url=${SONAR_HOST_URL}"
                     }
@@ -62,9 +62,9 @@ pipeline {
         }
 
         stage('Backend - Deploy to Nexus') {
-            agent { node { label '' } }  // Run on the master
             steps {
                 dir('backend') {
+                    // Deploy the backend application to Nexus
                     sh 'mvn deploy -DskipTests'
                 }
             }
@@ -72,25 +72,24 @@ pipeline {
 
         // ------------------- Frontend Stages -------------------
         stage('Frontend - Install Dependencies') {
-            agent { node { label '' } }  // Run on the master
             steps {
                 dir('frontend') {
+                    // Install frontend dependencies
                     sh 'npm install'
                 }
             }
         }
 
         stage('Frontend - Build') {
-            agent { node { label '' } }  // Run on the master
             steps {
                 dir('frontend') {
-                    sh 'npm run build'
+                    // Build the frontend application
+                    sh 'npm run build'  // Adjust if your frontend build script is named differently
                 }
             }
         }
 
         stage('Build Docker Image') {
-            agent { node { label '' } }  // Run on the master
             steps {
                 echo 'Building Docker images'
                 sh "docker build -t ${DOCKER_HUB_REPO}/back:latest -f backend/Dockerfile ./backend"
@@ -99,7 +98,6 @@ pipeline {
         }
 
         stage('Push to Docker Hub') {
-            agent { node { label '' } }  // Run on the master
             steps {
                 withCredentials([usernamePassword(credentialsId: 'docker_token', usernameVariable: 'DOCKER_HUB_USERNAME', passwordVariable: 'DOCKER_HUB_PASSWORD')]) {
                     sh "docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_PASSWORD}"
@@ -110,7 +108,6 @@ pipeline {
         }
 
         stage('Docker Compose') {
-            agent { node { label '' } }  // Run on the master
             steps {
                 sh 'docker compose down || true'
                 sh 'docker compose up --build -d'
@@ -120,6 +117,7 @@ pipeline {
 
     post {
         always {
+            // Clean up workspace after pipeline execution
             cleanWs()
         }
     }
