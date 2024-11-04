@@ -92,8 +92,8 @@ pipeline {
         stage('Build Docker Image') {
     steps {
         echo 'Building Docker images'
-        sh "docker build -t ${DOCKER_HUB_REPO}/back:latest -f backend/dockerfile ./backend"
-        sh "docker build -t ${DOCKER_HUB_REPO}/front:latest -f frontend/dockerfile ./frontend"
+        sh "docker build -t ${DOCKER_HUB_REPO}/back:latest -f backend/Dockerfile ./backend"
+        sh "docker build -t ${DOCKER_HUB_REPO}/front:latest -f frontend/Dockerfile ./frontend"
     }
 }
 
