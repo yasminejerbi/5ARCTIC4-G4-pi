@@ -52,7 +52,7 @@ pipeline {
 
         stage('Backend - SonarQube Analysis') {
             steps {
-                dir('backend') {
+                dir('back') {
                     // Run SonarQube analysis for code quality
                     withSonarQubeEnv('sq1') {
                         sh "mvn sonar:sonar -Dsonar.host.url=${SONAR_HOST_URL}"
@@ -110,7 +110,7 @@ pipeline {
         stage('docker_compose') {
             steps {
                 sh 'docker-compose down || true'
-                sh 'docker compose up --build -d'
+                sh 'docker-compose up --build -d'
             }
         }
     }
