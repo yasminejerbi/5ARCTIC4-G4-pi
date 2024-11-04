@@ -77,6 +77,15 @@ pipeline {
                 checkout scm
             }
         }
+        stage('Verify Backend Directory') {
+            steps {
+                dir('backend') {
+                    echo 'Checking backend directory contents...'
+                    sh 'ls -la'
+                }
+            }
+        }
+
 
         // Backend build stages
         stage('Backend - Maven Compile') {
