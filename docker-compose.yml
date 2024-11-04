@@ -5,15 +5,13 @@ services:
     image: mysql:5.7
     restart: unless-stopped
     environment:
-      - MYSQL_ROOT_PASSWORD=anasanas
+      - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=pi
     ports:
       - 3307:3306
     networks:
       - app-network
     command: --bind-address=0.0.0.0
-    volumes:
-      - ./mysql-init.sql:/docker-entrypoint-initdb.d/mysql-init.sql  # Mount the initialization script
 
   back:
     depends_on:
@@ -28,7 +26,7 @@ services:
       SPRING_APPLICATION_JSON: '{
         "spring.datasource.url" : "jdbc:mysql://mysql:3306/pi?createDatabaseIfNotExist=true",
         "spring.datasource.username" : "root",
-        "spring.datasource.password" : "anasanas",
+        "spring.datasource.password" : "root",
         "spring.jpa.properties.hibernate.dialect" : "org.hibernate.dialect.MySQLDialect",
         "spring.jpa.hibernate.ddl-auto": "update"
       }'
