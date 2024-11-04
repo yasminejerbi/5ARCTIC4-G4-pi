@@ -1,0 +1,101 @@
+pipeline {
+    agent any
+
+    environment {
+        DOCKER_HUB_REPO = 'med555'
+    }
+
+    stages {
+        stage('get_code') {
+            steps {
+                echo 'Pulling code'
+                git(
+                    branch: 'MohamedFrikha-5Arctic4-G4', 
+                    url: 'https://github.com/yasminejerbi/5ARCTIC4-G4-pi.git', 
+                    credentialsId: 'Devops'
+                )
+            }
+        }
+
+        stage('mvn_clean') {
+            steps {
+                dir('Back') {
+                    echo 'Running mvn clean'
+                    sh 'mvn clean'
+                }
+            }
+        }
+
+        stage('mvn_compile') {
+            steps {
+                dir('Back') {
+                    echo 'Running mvn compile'
+                    sh 'mvn compile'
+                }
+            }
+        }
+
+        stage('sonar') {
+            steps {
+                withSonarQubeEnv('sonarQube_inst') {
+                    dir('Back') {
+                        sh 'mvn org.sonarsource.scanner.maven:sonar-maven-plugin:4.0.0.4121:sonar -Dsonar.host.url=http://localhost:9000'
+                    }
+                }
+            }
+        }
+
+        stage('mvn_test_mockito') {
+            steps {
+                dir('Back') {
+                    echo 'Running mvn test'
+                    sh 'mvn test'
+                }
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                dir('Back') {
+                    echo 'Running mvn deploy'
+                    sh 'mvn clean deploy -DskipTests -Dusername=admin -Dpassword=Frikhamohamed123+'
+                }
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                echo 'Building Docker images'
+                sh 'docker build -t back:latest -f Back/dockerfile ./'
+                sh 'docker build --progress=plain -t front:latest -f Front/dockerfile Front/'
+            }
+        }
+
+        stage('DOCKER HUB') {
+            steps {
+                withCredentials([usernamePassword(credentialsId: 'docker_token', usernameVariable: 'DOCKER_HUB_USERNAME', passwordVariable: 'DOCKER_HUB_PASSWORD')]) {
+                    sh "docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_PASSWORD}"
+                    sh "docker tag back:latest ${DOCKER_HUB_REPO}/back:latest"
+                    sh "docker tag front:latest ${DOCKER_HUB_REPO}/front:latest"
+                    sh "docker push ${DOCKER_HUB_REPO}/back:latest"
+                    sh "docker push ${DOCKER_HUB_REPO}/front:latest"
+                }
+            }
+        }
+
+        stage('Run Docker-Compose') {
+            steps {
+                echo 'Starting Docker Compose'
+                sh 'docker-compose down || true' 
+                sh 'docker-compose pull'  
+                sh 'docker-compose up -d' 
+            }
+        }
+
+        stage('GRAFANA') {
+            steps {
+                echo 'GRAFANA'
+            }
+        }
+    }
+}
