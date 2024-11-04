@@ -1,0 +1,29 @@
+<div class="container">
+   
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Nom Candidat</th>
+        <th>Poste</th>
+        <th>Date</th>
+        <th>Status de Recrutement</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let candidate of candidates" class="table-default">
+        <td>{{ candidate.nomCandidat }}</td>
+        <td>{{ candidate.poste }}</td>
+        <td>{{ candidate.date }}</td>
+        <td>{{ candidate.recrutementStatus }}</td>
+        
+          <td>
+            <button class="btn btn-primary orange-button" (click)="candidate.id && modifierCandidate(candidate.id)">Modifier</button>
+          </td>  
+          <td>
+            <button class="btn btn-primary orange-button" (click)="candidate.id && deleteRecrutementById(candidate.id)">Supprimer</button>
+          </td>  
+      </tr>
+    </tbody>
+  </table>
+</div> 

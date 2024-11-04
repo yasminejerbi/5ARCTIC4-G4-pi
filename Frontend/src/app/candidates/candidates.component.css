@@ -1,0 +1,9 @@
+.container {
+  display: flex;
+  justify-content: center;
+  margin-top: 170px; /* Adjust this value as needed */
+}
+.orange-button {
+  background-color: #ff4533;
+  /* Add other styles like border, text color, etc. */
+}

@@ -1,0 +1,82 @@
+
+.cd{
+    margin-left:  10px;
+     margin-top: 10px; 
+    width: 900px;
+    height: 150px;  
+}
+.cd:hover {
+    box-shadow: 0 8px 8px 0 rgba(0, 0, 0, 0.2); /* Subtle shadow on hover */
+    transform: translateY(-2px); /* Slight upwards movement */
+  }
+  
+ .boutton:hover{
+    color: white;
+    background-color: #ff4533;
+} 
+.boutton{
+    margin-left : 20px;
+    background-color: #ff0000;
+    transition: 0.2s;
+    font-family:"Anton", sans-serif;
+}
+.card-img-top{
+    height:100px;
+    width:150px;
+    margin-left :120px;
+
+}
+.mat-card-title{
+    font: bolder;
+font-family: "Anton", sans-serif;
+color: black;
+}
+.mat-card-subtitle{
+    color: black;
+}
+.like{
+    font-size: small;
+}
+.bradcam_area{
+    background-image: url('/../../assets/img/gallery/clubs.jpg');
+   width: 1480px;
+}
+
+.image{
+    margin-top: 150px;
+    height: 200px;;
+    width:300px;
+}
+.btn btn-danger{
+    background-color: #ff0000;
+}
+.btn-ajouter{
+    margin-left: 900px;
+    margin-top: 20px;
+    height: 20px;
+    width:100px;
+    background-color: #ff0000;
+    font-family:"Anton", sans-serif;
+    color: #fefefe;
+    
+}
+.like-button .mat-icon {
+    color: black;
+  }
+  .like-button .mat-icon  :hover{
+    color: #fefefe;
+  }
+ 
+  
+  .btn {
+    color: white;
+  }
+  :host {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .demo-section + .demo-section {
+    margin-top: 16px;
+  }

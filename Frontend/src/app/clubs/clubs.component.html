@@ -1,0 +1,119 @@
+<div class="bradcam_area">
+  <div class="single_bradcam d-flex align-items-center overlay">
+      <div class="container">
+          <div class="row align-items-center justify-content-center">
+              <div class="col-xl-12">
+                  <div class="bradcam_text text-center">
+                      <div class="shape_1 wow fadeInUp" data-wow-duration="1s" data-wow-delay=".2s">
+
+                      </div>
+                      <div class="shape_2 wow fadeInDown" data-wow-duration="1s" data-wow-delay=".3s">
+
+                      </div>
+                      <h3 class="wow fadeInRight" data-wow-duration="1s" data-wow-delay=".3s"
+                          style="font-family: Anton, sans-serif;">Clubs</h3>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+
+<!-- <a class="btn-ajouter" routerLink="/ajouter/">Ajouter une description/question</a> -->
+
+<div class="container">
+  <div class="col-lg-3" style="margin-left: 1000px; margin-top:20px;">
+      <div class="row">
+          <div class="col">
+              <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                      <span class="input-group-text" id="basic-addon1" style="font-family:Anton, sans-serif;">Search</span>
+                  </div>
+                  <!-- <input type="text" class="form-control" placeholder="search" aria-label="Search"
+                      aria-describedby="basic-addon1"> -->
+                      <!-- <input type="search" placeholder="Search" class="form-control ml-25" /> -->
+                      
+
+
+
+                      <!-- <section>
+                        <form>
+                          <input type="text" placeholder="Filter by city" #filter>
+                          <button class="primary" type="button" (click)="filterResults(filter.value)">Search</button>
+                        </form>
+                      </section>
+                      <section class="results">
+                        <app-clubs
+                          *ngFor="let ClubSearch of filteredList"
+                          [ClubSearch]="ClubSearch">
+                        </app-clubs>
+                      </section> -->
+                  
+                      <section class="col-lg-3" style="margin-left: 1000px; margin-top:20px;">
+                        <div class="row">
+                          <div class="col">
+                            <div class="input-group mb-3">
+                              <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1" style="font-family:Anton, sans-serif;">Search</span>
+                              </div>
+                              <form>
+                                <input type="text" placeholder="Filter by city" #filter (keyup)="filterResults(filter.value)">
+                              </form>
+                            </div>
+                          </div>
+                        </div>
+                      </section>
+                      
+                      <div class="container">
+                        <div *ngFor="let club of filteredList">
+                          <mat-card class="cd">
+                            </mat-card>
+                        </div>
+                      </div>
+                        
+
+
+                  
+              </div>
+          </div>
+          <div class="col">
+              <button mat-raised-button style="background-color: #ff4533; color:#fefefe; margin-left: 80px; font-family:Anton, sans-serif ;"
+                  routerLink="/ajouter/">Add Club</button>
+          </div>
+      </div>
+  </div>
+  
+
+  <!-- Move the mat-card inside the ngFor loop -->
+  <div *ngFor="let club of clubs">
+    <mat-card class="cd">
+      <mat-card-content>
+          <table class="table table-striped">
+              <thead>
+                  <tr>
+                      <th>Nom Club</th>
+                      <th>Description</th>
+                      <th>Categorie</th>
+                      <th>Adresse</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr>
+                      <td>{{club.nomClub}}</td>
+                      <td>{{club.description}}</td>
+                      <td>{{club.categorie}}</td>
+                      <td>{{club.adresse}}</td>
+                  </tr>
+              </tbody>
+          </table>
+      </mat-card-content>
+      <mat-card-actions>
+          <!-- <button mat-raised-button routerLink="/Edit/{{ club.id }}" class="boutton">Join</button> -->
+          <button mat-raised-button (click)="openRegisterDialog(club.id)" class="boutton">Join</button>
+          
+          <button mat-icon-button color="red" aria-label="Delete icon button">
+          </button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</div>

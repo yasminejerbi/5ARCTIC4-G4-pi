@@ -1,0 +1,36 @@
+<div class="register-container">
+  <form [formGroup]="RegisterForm" (ngSubmit)="persist()">
+    <h2 class="register-title">Register</h2>
+    <div class="form-group">
+      <label for="name">Name <span>(Specify your name)</span></label>
+      <input type="text" id="name" name="name" placeholder="Enter your name" formControlName="nomCandidat" required>
+      <div *ngIf="RegisterForm.get('name')?.invalid && RegisterForm.get('name')?.touched" style="color:white;">
+        <div *ngIf="RegisterForm.get('name')?.hasError('required')">Name is required</div>
+        <div *ngIf="RegisterForm.get('name')?.hasError('minlength')">Name should be at least 3 characters</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="poste">Poste <span>(Specify the poste you want)</span></label>
+      <input type="text" id="poste" name="poste" placeholder="Enter your poste" formControlName="poste" required>
+      <div *ngIf="RegisterForm.get('poste')?.invalid && RegisterForm.get('poste')?.touched" style="color: white;">
+        <div *ngIf="RegisterForm.get('poste')?.hasError('required')">Poste is required</div>
+        </div>
+    </div>
+    <div class="form-group">
+      <label for="status">Status</label>
+      <input type="text" id="status" name="status" formControlName="recrutementStatus" value="In Progress" required>
+      <div *ngIf="RegisterForm.get('status')?.invalid && RegisterForm.get('status')?.touched" style="color: white;">
+        <div *ngIf="RegisterForm.get('status')?.hasError('required')">Status is required</div>
+      </div>
+    </div>
+    
+    <div class="form-group">
+      <label for="dob">Date of registration</label>
+      <input type="date" id="dob" name="dob" formControlName="date" required>
+      <div *ngIf="RegisterForm.get('dob')?.invalid && RegisterForm.get('dob')?.touched" style="color: white;">
+        <div *ngIf="RegisterForm.get('dob')?.hasError('required')">Date is required</div>
+      </div>
+    </div>
+    <button type="submit">Send</button>
+  </form>
+</div>
