@@ -77,20 +77,11 @@ pipeline {
                 checkout scm
             }
         }
-        stage('Verify Backend Directory') {
-            steps {
-                dir('backend') {
-                    echo 'Checking backend directory contents...'
-                    sh 'ls -la'
-                }
-            }
-        }
-
 
         // Backend build stages
         stage('Backend - Maven Compile') {
             steps {
-                dir('backend') {
+                dir('Backend') {
                     echo 'Compiling the backend code'
                     sh 'mvn clean compile'
                 }
@@ -99,7 +90,7 @@ pipeline {
 
         stage('Backend - Tests') {
             steps {
-                dir('backend') {
+                dir('Backend') {
                     echo 'Running backend tests'
                     sh 'mvn test'
                 }
@@ -108,7 +99,7 @@ pipeline {
 
         stage('Backend - Code Coverage with Jacoco') {
             steps {
-                dir('backend') {
+                dir('Backend') {
                     echo 'Running Jacoco for backend code coverage'
                     sh 'mvn jacoco:report'
                 }
@@ -120,12 +111,12 @@ pipeline {
                 scannerHome = tool 'SonarScanner'  // SonarScanner tool configured in Jenkins
             }
             steps {
-                dir('backend') {
+                dir('Backend') {
                     withSonarQubeEnv('SonarQubeServer') { // SonarQube server configured in Jenkins
                         withCredentials([string(credentialsId: 'sonarqube-credential', variable: 'SONAR_TOKEN')]) {
                             sh """
                                 ${scannerHome}/bin/sonar-scanner \
-                                -Dsonar.projectKey=5ARCTIC4-G4-pi-backend \
+                                -Dsonar.projectKey=5ARCTIC4-G4-pi-Backend \
                                 -Dsonar.sources=src \
                                 -Dsonar.host.url=http://192.168.118.147:9000 \
                                 -Dsonar.login=$SONAR_TOKEN \
@@ -149,7 +140,7 @@ pipeline {
         // Frontend build stages
         stage('Frontend - Install Dependencies') {
             steps {
-                dir('frontend') {
+                dir('Frontend') {
                     echo 'Installing frontend dependencies'
                     sh 'npm install'
                 }
@@ -158,7 +149,7 @@ pipeline {
 
         stage('Frontend - Build') {
             steps {
-                dir('frontend') {
+                dir('Frontend') {
                     echo 'Building the frontend'
                     sh 'npm run build --prod'
                 }
