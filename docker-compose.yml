@@ -11,6 +11,9 @@ services:
       - 3307:3306
     networks:
       - app-network
+    command: --bind-address=0.0.0.0
+    volumes:
+      - ./mysql-init.sql:/docker-entrypoint-initdb.d/mysql-init.sql  # Mount the initialization script
 
   back:
     depends_on:
