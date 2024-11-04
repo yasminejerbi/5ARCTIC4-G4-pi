@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   frontend:
-    image: tum3d/pi-appfront-image
+    image: tum3d/ahmedsiala-5arctic4-pifront
     ports:
       - "8082:80"
     volumes:
@@ -11,7 +11,7 @@ services:
       - spring-net
 
   backend:
-    image: tum3d/pi-appback-image
+    image: tum3d/ahmedsiala-5arctic4-piback
     ports:
       - "9001:9000"
     environment:
