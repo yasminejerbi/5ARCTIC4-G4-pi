@@ -6,7 +6,7 @@ import tn.esprit.pi.entities.Forum;
 import tn.esprit.pi.services.IGestionForum;
 
 import java.util.List;
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "http://192.168.33.10:4200")
 @RestController
 @RequestMapping("/Forums")
 public class IForumController {
