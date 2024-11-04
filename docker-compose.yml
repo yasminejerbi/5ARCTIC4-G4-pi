@@ -16,7 +16,7 @@ services:
   back:
     depends_on:
       - mysql
-    image: anashammou37/backend:latest
+    image: anashammou37/back:latest
     restart: on-failure
     ports:
       - 9003:9003
@@ -36,7 +36,7 @@ services:
   front:
     depends_on:
       - back
-    image: anashammou37/frontend:latest
+    image: anashammou37/front:latest
     ports:
       - "4200:80"
     networks:
