@@ -82,7 +82,7 @@ pipeline {
         stage('Backend - Maven Compile') {
             steps {
                 dir('Backend') {
-                    echo 'Compiling the backend code'
+                    echo 'Compiling the Backend code'
                     sh 'mvn clean compile'
                 }
             }
@@ -91,7 +91,7 @@ pipeline {
         stage('Backend - Tests') {
             steps {
                 dir('Backend') {
-                    echo 'Running backend tests'
+                    echo 'Running Backend tests'
                     sh 'mvn test'
                 }
             }
@@ -100,7 +100,7 @@ pipeline {
         stage('Backend - Code Coverage with Jacoco') {
             steps {
                 dir('Backend') {
-                    echo 'Running Jacoco for backend code coverage'
+                    echo 'Running Jacoco for Backend code coverage'
                     sh 'mvn jacoco:report'
                 }
             }
@@ -130,8 +130,8 @@ pipeline {
 
         stage('Backend - Maven Deploy') {
             steps {
-                dir('backend') {
-                    echo 'Deploying the backend artifact to Nexus'
+                dir('Backend') {
+                    echo 'Deploying the Backend artifact to Nexus'
                     sh 'mvn deploy -DskipTests'
                 }
             }
@@ -141,7 +141,7 @@ pipeline {
         stage('Frontend - Install Dependencies') {
             steps {
                 dir('Frontend') {
-                    echo 'Installing frontend dependencies'
+                    echo 'Installing Frontend dependencies'
                     sh 'npm install'
                 }
             }
@@ -150,7 +150,7 @@ pipeline {
         stage('Frontend - Build') {
             steps {
                 dir('Frontend') {
-                    echo 'Building the frontend'
+                    echo 'Building the Frontend'
                     sh 'npm run build --prod'
                 }
             }
@@ -159,7 +159,7 @@ pipeline {
 
     post {
         always {
-            archiveArtifacts artifacts: 'backend/target/site/jacoco/*', allowEmptyArchive: true
+            archiveArtifacts artifacts: 'Backend/target/site/jacoco/*', allowEmptyArchive: true
         }
     }
 }
