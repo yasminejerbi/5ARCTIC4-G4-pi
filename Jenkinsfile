@@ -89,5 +89,13 @@ pipeline {
                         sh 'mvn deploy -DskipTests'
                     }
     }
+         stage('Push Docker Image') {
+                    steps {
+                        // Se connecter à Docker Hub
+                        sh 'echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin'
+                        // Pousser l'image vers Docker Hub
+                        sh 'docker push mayssa858/backend:latest'
+                    }
+                }
 }
 }
