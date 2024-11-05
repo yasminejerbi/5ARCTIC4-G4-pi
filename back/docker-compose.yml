@@ -35,7 +35,7 @@ services:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: pi
     ports:
-      - "3306:3306"
+      - "3307:3306"
     volumes:
       - mysql_dt:/var/lib/mysql
     networks:
