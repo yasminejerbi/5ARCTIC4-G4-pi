@@ -51,4 +51,66 @@ pipeline {
                                 -Dsonar.sources=src \
                                 -Dsonar.host.url=http://192.168.118.147:9000 \
                                 -Dsonar.login=$SONAR_TOKEN \
-                                -Dsonar.java.binaries=ta
+                                -Dsonar.java.binaries=target/classes
+                            """
+                        }
+                    }
+                }
+            }
+        }
+
+        stage('Backend - Maven Deploy') {
+            steps {
+                dir('Backend') {
+                    echo 'Deploying the Backend artifact to Nexus'
+                    sh 'mvn deploy -DskipTests'
+                }
+            }
+        }
+
+        // Frontend build stages
+        stage('Frontend - Install Dependencies') {
+            steps {
+                dir('Frontend') {
+                    echo 'Installing Frontend dependencies'
+                    sh 'npm install'
+                }
+            }
+        }
+
+        stage('Frontend - Build') {
+            steps {
+                dir('Frontend') {
+                    echo 'Building the Frontend'
+                    sh 'npm run build --prod'
+                }
+            }
+        }
+
+        // Docker build stages
+        stage('Build Docker Image') {
+            steps {
+                echo 'Building Docker images'
+                sh 'docker build -t back:latest -f Backend/Dockerfile Backend/'
+                sh 'docker build --progress=plain -t front:latest -f Frontend/Dockerfile Frontend/'
+            }
+        }
+
+        stage('DOCKER HUB') {
+            steps {
+                withCredentials([usernamePassword(credentialsId: 'docker_token', usernameVariable: 'DOCKER_HUB_USERNAME', passwordVariable: 'DOCKER_HUB_PASSWORD')]) {
+                    sh "docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_PASSWORD}"
+                    sh "docker tag back:latest ${DOCKER_HUB_REPO}/Backend:latest"
+                    sh "docker tag front:latest ${DOCKER_HUB_REPO}/Frontend:latest"
+                    sh "docker push ${DOCKER_HUB_REPO}/Backend:latest"
+                    sh "docker push ${DOCKER_HUB_REPO}/Frontend:latest"
+                }
+            }
+        }
+
+        stage('Run Docker-Compose') {
+            steps {
+                echo 'Starting Docker Compose'
+                sh 'docker-compose down || true'
+                sh 'docker-compose pull'
+                sh 'd
