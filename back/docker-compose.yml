@@ -41,9 +41,45 @@ services:
     networks:
       - Network
 
-volumes:
-  uploads:
-  mysql_dt:
+  prometheus:
+    image: prom/prometheus:latest
+    restart: unless-stopped
+    ports:
+      - "9090:9090"
+    volumes:
+      - /home/vagrant/prometheus.yml:/etc/prometheus/prometheus.yml
+    networks:
+      - Network
+
+  node-exporter:
+    image: prom/node-exporter:latest
+    restart: unless-stopped
+    ports:
+      - "9100:9100"
+    networks:
+      - Network
+    command:
+      - --path.procfs=/host/proc
+      - --path.sysfs=/host/sys
+      - --path.rootfs=/host/root
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/host/root:ro
+
+  grafana:
+    image: grafana/grafana:latest
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    networks:
+      - Network
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
 
 networks:
   Network:
+
+volumes:
+  uploads:
+  mysql_dt:
