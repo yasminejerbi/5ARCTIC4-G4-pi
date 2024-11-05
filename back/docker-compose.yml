@@ -1,0 +1,49 @@
+version: '3.8'
+
+services:
+  frontend:
+    image: firashlel/frontimage
+    ports:
+      - "8082:80"
+    volumes:
+      - uploads:/app/uploads
+    networks:
+      - Network
+
+  backend:
+    image: firashlel/backimage
+    ports:
+      - "9001:9001"
+    environment:
+      MYSQL_HOST: mysqlcon
+      MYSQL_PORT: 3306
+      MYSQL_DB_NAME: pi
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+      SERVER_PORT: 9001
+    volumes:
+      - uploads:/app/uploads
+    depends_on:
+      - mysql
+    networks:
+      - Network
+
+  mysql:
+    image: mysql:8.0.36
+    container_name: mysqlcon
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: pi
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_dt:/var/lib/mysql
+    networks:
+      - Network
+
+volumes:
+  uploads:
+  mysql_dt:
+
+networks:
+  Network:
