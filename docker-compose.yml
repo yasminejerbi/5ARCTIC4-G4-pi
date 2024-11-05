@@ -42,13 +42,13 @@ services:
     networks:
       - app-network
 
-    prometheus:
+  prometheus:  # Correct indentation here
     image: prom/prometheus:latest
     restart: unless-stopped
     ports:
       - "9090:9090"
     volumes:
-      - ./prometheus.yml:/etc/prometheus/prometheus.yml  # Montée du fichier prometheus.yml
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml  # Mounting the prometheus.yml file
     networks:
       - app-network
 
