@@ -90,14 +90,14 @@ pipeline {
             }
         }
 
-        // Docker build stages
-        stage('Build Docker Image') {
-            steps {
-                echo 'Building Docker images'
-                sh 'docker build -t back:latest -f Backend/Dockerfile Backend/'
-                sh 'docker build --progress=plain -t front:latest -f Frontend/Dockerfile Frontend/'
-            }
-        }
+//         // Docker build stages
+//         stage('Build Docker Image') {
+//             steps {
+//                 echo 'Building Docker images'
+//                 sh 'docker build -t back:latest -f Backend/Dockerfile Backend/'
+//                 sh 'docker build --progress=plain -t front:latest -f Frontend/Dockerfile Frontend/'
+//             }
+//         }
 
 //         stage('DOCKER HUB') {
 //             steps {
