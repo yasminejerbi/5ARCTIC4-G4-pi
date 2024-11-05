@@ -113,4 +113,14 @@ pipeline {
                 echo 'Starting Docker Compose'
                 sh 'docker-compose down || true'
                 sh 'docker-compose pull'
-                sh 'd
+                sh 'docker-compose up -d'
+            }
+        }
+    }
+
+    post {
+        always {
+            archiveArtifacts artifacts: 'Backend/target/site/jacoco/*', allowEmptyArchive: true
+        }
+    }
+}
