@@ -13,14 +13,14 @@ pipeline {
 
     stages {
         // ------------------- Backend Stages -------------------
-        /*stage('Backend - Clean') {
+        stage('Backend - Clean') {
             agent { label 'slave_ubuntu_build' }
             steps {
                 dir('backend') {
                     sh 'mvn clean'
                 }
             }
-        }*/
+        }
 
         stage('Backend - Compile') {
             agent { label 'master' }
