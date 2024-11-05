@@ -99,12 +99,28 @@ pipeline {
             }
         }
 
+//         stage('DOCKER HUB') {
+//             steps {
+//                 withCredentials([usernamePassword(credentialsId: 'c6372e6d-2258-4cba-bd1f-42cf8cd49c8b', usernameVariable: 'DOCKER_HUB_USERNAME', passwordVariable: 'DOCKER_HUB_PASSWORD')]) {
+//                     sh "docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_PASSWORD}"
+//                     sh "docker tag back:latest ${DOCKER_HUB_REPO}/Backend:latest"
+//                     sh "docker tag front:latest ${DOCKER_HUB_REPO}/Frontend:latest"
+//                     sh "docker push ${DOCKER_HUB_REPO}/Backend:latest"
+//                     sh "docker push ${DOCKER_HUB_REPO}/Frontend:latest"
+//                 }
+//             }
+//         }
         stage('DOCKER HUB') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'c6372e6d-2258-4cba-bd1f-42cf8cd49c8b', usernameVariable: 'DOCKER_HUB_USERNAME', passwordVariable: 'DOCKER_HUB_PASSWORD')]) {
-                    sh "docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_PASSWORD}"
+                    // Secure Docker login
+                    sh "echo ${DOCKER_HUB_PASSWORD} | docker login -u ${DOCKER_HUB_USERNAME} --password-stdin"
+
+                    // Tagging Docker images
                     sh "docker tag back:latest ${DOCKER_HUB_REPO}/Backend:latest"
                     sh "docker tag front:latest ${DOCKER_HUB_REPO}/Frontend:latest"
+
+                    // Pushing images to Docker Hub
                     sh "docker push ${DOCKER_HUB_REPO}/Backend:latest"
                     sh "docker push ${DOCKER_HUB_REPO}/Frontend:latest"
                 }
