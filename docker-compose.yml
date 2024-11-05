@@ -48,7 +48,7 @@ services:
     ports:
       - "9090:9090"
     volumes:
-      - ./prometheus.yml  # Montée du fichier prometheus.yml
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml  # Montée du fichier prometheus.yml
     networks:
       - app-network
 
