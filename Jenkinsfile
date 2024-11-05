@@ -156,6 +156,33 @@ pipeline {
             }
         }
     }
+            stage('Build Docker Image') {
+                steps {
+                    echo 'Building Docker images'
+                    sh 'docker build -t back:latest -f Backend/Dockerfile Backend/'
+                    sh 'docker build --progress=plain -t front:latest -f Frontend/Dockerfile Frontend/'
+                }
+            }
+            stage('DOCKER HUB') {
+                steps {
+                    withCredentials([usernamePassword(credentialsId: 'docker_token', usernameVariable: 'DOCKER_HUB_USERNAME', passwordVariable: 'DOCKER_HUB_PASSWORD')]) {
+                        sh "docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_PASSWORD}"
+                        sh "docker tag back:latest ${DOCKER_HUB_REPO}/Backend:latest"
+                        sh "docker tag front:latest ${DOCKER_HUB_REPO}/Frontend:latest"
+                        sh "docker push ${DOCKER_HUB_REPO}/back:latest"
+                        sh "docker push ${DOCKER_HUB_REPO}/front:latest"
+                    }
+                }
+            }
+
+            stage('Run Docker-Compose') {
+                steps {
+                    echo 'Starting Docker Compose'
+                    sh 'docker-compose down || true'
+                    sh 'docker-compose pull'
+                    sh 'docker-compose up -d'
+                }
+            }
 
     post {
         always {
