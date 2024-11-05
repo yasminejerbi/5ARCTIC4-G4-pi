@@ -1,30 +1,113 @@
+#version: '3.8'
+#
+#services:
+#  backend:
+#    build:
+#      context: ./backend
+#    ports:
+#      - "8080:8080"
+#    environment:
+#      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/your_database
+#      - SPRING_DATASOURCE_USERNAME=root
+#      - SPRING_DATASOURCE_PASSWORD=your_password
+#    depends_on:
+#      - mysql
+#
+#  frontend:
+#    build:
+#      context: ./frontend
+#    ports:
+#      - "4200:80"
+#    depends_on:
+#      - backend
+#
+#  mysql:
+#    image: latest
+#    environment:
+#      MYSQL_ROOT_PASSWORD: your_password
+#      MYSQL_DATABASE: your_database
+#    ports:
+#      - "3306:3306"
 version: '3.8'
 
 services:
-  backend:
-    build:
-      context: ./backend
-    ports:
-      - "8080:8080"
+  mysql:
+    image: mysql:5.7
+    restart: unless-stopped
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/your_database
-      - SPRING_DATASOURCE_USERNAME=root
-      - SPRING_DATASOURCE_PASSWORD=your_password
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=pi
+    ports:
+      - 3307:3306
+    networks:
+      - app-network
+    command: --bind-address=0.0.0.0
+
+  back:
     depends_on:
       - mysql
+    image: yasminejerbi/back:latest
+    restart: on-failure
+    ports:
+      - 9003:9003
+    environment:
+      SPRING_APPLICATION_JSON: '{
+        "spring.datasource.url" : "jdbc:mysql://mysql:3306/pi?createDatabaseIfNotExist=true",
+        "spring.datasource.username" : "root",
+        "spring.datasource.password" : "root",
+        "spring.jpa.properties.hibernate.dialect" : "org.hibernate.dialect.MySQLDialect",
+        "spring.jpa.hibernate.ddl-auto": "update"
+      }'
+    stdin_open: true
+    tty: true
+    networks:
+      - app-network
 
-  frontend:
-    build:
-      context: ./frontend
+  front:
+    depends_on:
+      - back
+    image: yasminejerbi/front:latest
     ports:
       - "4200:80"
-    depends_on:
-      - backend
+    networks:
+      - app-network
 
-  mysql:
-    image: latest
-    environment:
-      MYSQL_ROOT_PASSWORD: your_password
-      MYSQL_DATABASE: your_database
+  prometheus:
+    image: prom/prometheus:latest
+    restart: unless-stopped
     ports:
-      - "3306:3306"
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    networks:
+      - app-network
+
+  node-exporter:
+    image: prom/node-exporter:latest
+    restart: unless-stopped
+    ports:
+      - "9100:9100"
+    networks:
+      - app-network
+    command:
+      - --path.procfs=/host/proc
+      - --path.sysfs=/host/sys
+      - --path.rootfs=/host/root
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/host/root:ro
+
+  grafana:
+    image: grafana/grafana:latest
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    networks:
+      - app-network
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=grafana
+
+networks:
+  app-network:
+    driver: bridge
