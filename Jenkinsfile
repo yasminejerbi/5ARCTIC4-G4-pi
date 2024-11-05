@@ -117,12 +117,12 @@ pipeline {
                     sh "echo ${DOCKER_HUB_PASSWORD} | docker login -u ${DOCKER_HUB_USERNAME} --password-stdin"
 
                     // Tagging Docker images
-                    sh "docker tag back:latest ${DOCKER_HUB_REPO}/Backend:latest"
-                    sh "docker tag front:latest ${DOCKER_HUB_REPO}/Frontend:latest"
+                    sh "docker tag back:latest ${DOCKER_HUB_REPO}/backend:latest"
+                    sh "docker tag front:latest ${DOCKER_HUB_REPO}/frontend:latest"
 
                     // Pushing images to Docker Hub
-                    sh "docker push ${DOCKER_HUB_REPO}/Backend:latest"
-                    sh "docker push ${DOCKER_HUB_REPO}/Frontend:latest"
+                    sh "docker push ${DOCKER_HUB_REPO}/backend:latest"
+                    sh "docker push ${DOCKER_HUB_REPO}/frontend:latest"
                 }
             }
         }
