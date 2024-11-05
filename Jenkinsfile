@@ -98,7 +98,7 @@ pipeline {
 
         stage('DOCKER HUB') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'docker_token', usernameVariable: 'DOCKER_HUB_USERNAME', passwordVariable: 'DOCKER_HUB_PASSWORD')]) {
+                withCredentials([usernamePassword(credentialsId: 'docker_token', usernameVariable: 'yasminejerbi', passwordVariable: 'yasmine2000')]) {
                     sh "docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_PASSWORD}"
                     sh "docker tag back:latest ${DOCKER_HUB_REPO}/Backend:latest"
                     sh "docker tag front:latest ${DOCKER_HUB_REPO}/Frontend:latest"
