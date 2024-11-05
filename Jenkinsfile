@@ -121,8 +121,8 @@ pipeline {
                     sh "docker tag front:latest ${DOCKER_HUB_REPO}/front:latest"
 
                     // Pushing images to Docker Hub
-                    sh "docker push ${DOCKER_HUB_REPO}/backend:latest"
-                    sh "docker push ${DOCKER_HUB_REPO}/frontend:latest"
+                    sh "docker push ${DOCKER_HUB_REPO}/back:latest"
+                    sh "docker push ${DOCKER_HUB_REPO}/front:latest"
                 }
             }
         }
