@@ -1,6 +1,9 @@
 pipeline {
     agent any
 
+    environment {
+        DOCKER_HUB_REPO = 'yasminejerbi'
+    }
     stages {
         stage('Checkout') {
             steps {
@@ -98,7 +101,7 @@ pipeline {
 
         stage('DOCKER HUB') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'docker_token', usernameVariable: 'yasminejerbi', passwordVariable: 'yasmine2000')]) {
+                withCredentials([usernamePassword(credentialsId: 'c6372e6d-2258-4cba-bd1f-42cf8cd49c8b', usernameVariable: 'DOCKER_HUB_USERNAME', passwordVariable: 'DOCKER_HUB_PASSWORD')]) {
                     sh "docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_PASSWORD}"
                     sh "docker tag back:latest ${DOCKER_HUB_REPO}/Backend:latest"
                     sh "docker tag front:latest ${DOCKER_HUB_REPO}/Frontend:latest"
