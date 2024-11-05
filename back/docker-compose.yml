@@ -13,7 +13,7 @@ services:
   backend:
     image: firashlel/backimage
     ports:
-      - "9009:9000"
+      - "9009:9009"
     environment:
       MYSQL_HOST: mysqlcon
       MYSQL_PORT: 3306
